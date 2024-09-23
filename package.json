@@ -1,0 +1,30 @@
+{
+  "name": "Bip39UI",
+  "version": "1.0.0",
+  "description": "User Interface to Generate a BIP39 (128/256) and Check the Strength. Client Side and Server Side.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/script.js",
+    "dev": "reload -b -p 7171 & gulp --watch",
+    "build": "gulp --build"
+  },
+  "keywords": [
+    "BIP39",
+    "Strength-Check",
+    "User Interface",
+    "Mnemonic"
+  ],
+  "author": "vivarado",
+  "license": "ISC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-file-include": "^2.3.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-replace": "^1.1.4",
+    "reload": "^3.2.1"
+  }
+}

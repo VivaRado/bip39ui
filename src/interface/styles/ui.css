@@ -1,0 +1,598 @@
+/* Interface / UI (CSS) ∞ 1.0.0 */
+/** -----------------------------------------------------
+ * Buttons 
+ */
+.btn {
+	font-family: monospace;
+	font-size: 1.2rem;
+	padding: 0.5rem 1rem;
+	text-decoration: none;
+	cursor: pointer;
+	border: none;
+	font-weight: bold;
+	position: relative;
+	text-align: center;
+	display: inline-block;
+}
+.btn:hover {
+	text-decoration: none;
+}
+/* Pseudo Element Box Shadow Independent for Masking */
+.ren_minimal.btn::before {
+	position: absolute;
+	display: block;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	content: '';
+	border-radius: 0.3rem;
+}
+.btn.lg::before {
+	border-radius: 0.3rem;
+}
+.ren_minimal.btn::before {
+	box-shadow: inset 0px 0px 0px 2px rgba(0, 0, 0, 0.5);
+}
+.ren_minimal.btn:hover::before {
+	box-shadow: inset 0px 0px 0px 2px rgba(0, 0, 0, 1);
+}
+/** -----------------------------------------------------
+ * Select Element 
+ */
+:root {
+	--ln: 0.55rem; /*line-height*/
+	--pd: 0.6rem;  /*padding*/
+	--ht: 2.75rem; /*height*/
+	--sw: 3rem;    /*symbol width*/
+	--sl: 2.9rem;  /*symbol line-height*/
+}
+/* Initial */
+nav[role="select"],
+nav[role="select"] *,
+.lst label::before,
+.lst label::after {
+	box-sizing: border-box;
+}
+nav[role="select"] {
+	position: relative;
+	display: inline-block;
+	margin-bottom: 2rem; /* not important */
+}
+/* exp */
+nav[role="select"] .exp {
+	position: absolute;
+	width: 0;
+	height: 0;
+	opacity: 0;
+	margin: 0;
+}
+/* cl */
+nav[role="select"] .cl {
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+/* el */
+nav[role="select"] .el {
+	position: absolute;
+	display: block;
+	top: 0;
+	left: 0;
+}
+nav[role="select"] .el::after { /* for arrow symbol */
+	position: absolute;
+	top: 0;
+	right: 0;
+	content: '▾';
+	text-align: center;
+	transition: transform 0.25s;
+}
+/* lst */
+nav[role="select"] .lst input,
+nav[role="select"] .lst label::after,
+nav[role="select"] .con {
+	display: none;
+}
+nav[role="select"] .lst label {
+	position: relative;
+	height: 0;
+	width: 100%;
+	float: left;
+	clear: both;
+	text-align: left;
+}
+nav[role="select"] .lst label::after,
+nav[role="select"] .lst label::before {
+	position: relative;
+	left: 0;
+	opacity: 0;
+	content: attr(data-value);
+}
+nav[role="select"] .lst label::before {
+	display: table;
+}
+nav[role="select"] .lst .ph::after {
+	position: absolute;
+	display: block;
+}
+nav[role="select"] .lst .ph::before {
+	display: inline-block;
+	opacity: 1;
+}
+/* Dimensions */
+nav[role="select"] {
+	width: auto;
+	font-size: 1.2rem;
+	padding-top: var(--ht);
+}
+nav[role="select"],
+nav[role="select"] .el,
+nav[role="select"] .lst input:checked + label::after,
+nav[role="select"] .exp:checked ~ .lst label,
+nav[role="select"] .lst .ph:after {
+	height: var(--ht);
+}
+nav[role="select"] .lst {
+	margin-top: 0.25rem;
+	max-height: calc( var(--ht) * 3); /*3=number of visible items*/
+	z-index: 1;
+	display: inline;
+}
+nav[role="select"] .lst label::before,
+nav[role="select"] .lst label::after,
+nav[role="select"] .el,
+nav[role="select"] .el::after {
+	width: 100%;
+	height: 100%;
+}
+nav[role="select"] .el::after {
+	width: var(--sw);
+	line-height: var(--sl); /*arrow symbol*/
+}
+nav[role="select"] .lst label::before,
+nav[role="select"] .lst label::after{
+	padding: var(--ln) calc(var(--pd) * 1.5);
+}
+nav[role="select"] .lst label::after, 
+nav[role="select"] .lst .ph::before {
+	padding-right: var(--sw);
+}
+nav[role="select"] .lst input:checked + label::after,
+nav[role="select"] .lst .ph::before,
+nav[role="select"] .lst .ph:after {
+	top: calc(-1 * var(--ht));
+}
+nav[role="select"] .exp:checked~.lst .ph::after {
+	top: calc((var(--ln) * 3) / 2);
+}
+nav[role="select"] .lst label::before, 
+nav[role="select"] .lst label::after{
+	line-height: calc(var(--ln) * 3);
+}
+nav[role="select"] .lst .ph::before {
+	top: calc(-1 * var(--ht) )
+}
+nav[role="select"] .exp:checked ~ .lst .ph {
+	height: 0px;
+	margin-top: calc(-1 * var(--ht) );
+}
+/* Implicit Dimensions */
+nav[role="select"].imp .lst label:has(> input:checked)::after{
+	top: calc(-1 * var(--ht));
+}
+nav[role="select"].imp .lst label:has(> input:checked)::after{
+	height: var(--ht);
+}
+/* Interactivity */
+nav[role="select"] .lst,
+nav[role="select"] .lst .ph::before,
+nav[role="select"] .exp:checked ~ .el,
+nav[role="select"] .exp:checked ~ .lst .ph {
+	pointer-events: none;
+}
+nav[role="select"] .lst input:checked ~ .lst label::after,
+nav[role="select"] .lst input:checked + label::after,
+nav[role="select"] .exp:checked ~ .lst label::before,
+nav[role="select"] .exp:checked ~ .lst .ph::after{
+	opacity: 1;
+}
+nav[role="select"] .exp:checked ~ .el::after {
+	transform: scale(-1, -1);
+}
+nav[role="select"] .exp:checked ~ .lst {
+	
+	overflow-x: hidden;
+	pointer-events: auto;
+	float: left;
+}
+nav[role="select"] .lst input:checked + label::after,
+nav[role="select"] .exp:checked + .cl{
+	display: block;
+}
+nav[role="select"] .exp:checked ~ .lst .ph::after,
+nav[role="select"] .lst input:checked + label::after {
+	position: absolute;
+}
+nav[role="select"] .exp:checked ~ .lst .ph {
+	padding: 0;
+	position: initial !important;
+}
+nav[role="select"] .exp:checked ~ .lst .ph::after {
+	top: 0;
+}
+nav[role="select"] .exp:checked ~ .lst .ph::before {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+nav[role="select"] .lst input:checked ~ .ph::before,
+nav[role="select"] .exp:checked ~ .lst .ph::before {
+	opacity: 0;
+}
+/* Implicit Interactivity */
+nav[role="select"].imp .lst label:has(> input:checked)::after,
+nav[role="select"].imp .lst label:has(> input:checked){
+	opacity: 1;
+}
+nav[role="select"].imp .lst label:has(> input:checked)::after{
+	display: block;
+}
+nav[role="select"].imp .lst label:has(> input:checked)::after{
+	position: absolute;
+}
+nav[role="select"].imp .lst label:has(> input:checked) ~ .ph::before{
+	opacity: 0;
+}
+/* Appearance */
+nav[role='select'] {
+	font-family: monospace;
+	background-color: transparent;
+	box-shadow: inset 0px 0px 0px 2px rgba(0, 0, 0, 1);
+	border-radius: 0.3rem;
+}
+nav[role="select"] {
+	color: #000;
+}
+nav[role="select"] .exp:checked ~ .lst label:hover,
+nav[role="select"] .exp:checked ~ .lst label:active {
+	background-color: rgba(255, 255, 255, 0.4);
+}
+nav[role="select"] .exp:checked ~ .lst {
+	border-radius: 0.3rem;
+	background: rgba(223, 223, 223, 0.9);
+}
+nav[role="select"] .lst label:not(.ph)::after {
+	font-weight: bold;
+}
+nav[role="select"],
+.el,
+.lst label,
+.exp:checked ~ .el {
+	cursor: pointer;
+}
+/** -----------------------------------------------------
+ * Inputs 
+ */
+.inp {
+	font-size: 1.5rem;
+	font-family: monospace;
+	height: 2.8rem;
+	width: auto;
+	border-radius: 0 0 0.3rem 0.3rem;
+	padding: 0 0.5rem 0 0.5rem;
+	position: relative;
+	display: block;
+	margin-bottom: 1.5rem;
+	border: none;
+	border-width: 2px;
+	border-style: solid;
+	border-top-width: 0px;
+	background: transparent;
+	transition: all 0.2s;
+	clip-path: polygon( 0% 75%, 
+						4px 75%, 
+						4px 0%, 
+						calc(100% - 4px) 0%, 
+						calc(100% - 4px) 75%, 
+						100% 75%, 
+						100% 100%, 
+						0% 100%);
+}
+.inp:not(:read-only):focus { 
+	clip-path: polygon( 0% 1.5%, 
+						4px 1.5%, 
+						4px 0%, 
+						calc(100% - 4px) 0%, 
+						calc(100% - 4px) 1.5%, 
+						100% 1.5%, 
+						100% 100%, 
+						0% 100%);
+	transition: all 0.2s;
+}
+.inp:read-only {
+	cursor: default;
+}
+.inp { 
+	color: rgba(0, 0, 0, 0.8);
+	border-color: rgba(0, 0, 0, 0.5);
+}
+.inp:not(:read-only):focus,
+.inp:not(:read-only):hover { 
+	color: rgba(0, 0, 0, 1);
+	border-color: rgba(0, 0, 0, 1);
+}
+::selection {
+  color: #fff;
+  background: #666;
+}
+/** -----------------------------------------------------
+ * Autocomplete Search Inputs 
+ */
+nav[role="search"] {
+	float: left;
+	padding: 0.5rem;
+}
+.multi.multisearch {
+	margin-top: 0;
+	background: rgba(223, 223, 223, 0.9);
+}
+.multi.multisearch.fade_in ,
+nav[role="search"] .search-results.fade_in {
+	opacity: 1;
+	pointer-events: auto;
+	display: block;
+}
+.multi.multisearch .itm.show b,
+nav[role="search"] .search-results .itm.show b{
+	pointer-events: none;
+}
+.multi.multisearch .itm.show,
+nav[role="search"] .search-results .itm.show{
+	display: block;
+}
+.multi.multisearch .itm:hover,
+nav[role="search"] .search-results .itm:hover{
+	background: #eee;
+}
+.multi.multisearch .itm,
+nav[role="search"] .search-results .itm{ 
+	display: none;
+	cursor: pointer;
+	padding: 0.25rem;
+}
+.multi.multisearch .itm.highlight,
+nav[role="search"] .search-results .itm.highlight { 
+  background-color: #1e1e1e;
+  color: #fff;
+}
+nav[role="search"].error input:focus,
+nav[role="search"].error input:hover,
+nav[role="search"].error input:active,
+nav[role="search"].error input {
+	border-color: #ff5454;
+	color: #ff5454;
+}
+nav[role="search"] .search-results {
+	opacity: 0;
+	display: none;
+	border-radius: 0.3rem;
+	margin-top: 0.25rem;
+	min-height: 1.6rem;
+	position: relative;
+	z-index: 2;
+	max-height: 20rem;
+	overflow: auto;
+	background: rgba(223, 223, 223, 0.9);
+}
+nav[role="search"].multi_share .search-results {
+	background: transparent;
+}
+.passphrase_inputs nav[role="search"] .search-results .itm{
+	padding: 0.5rem 0.5em;
+	font-size: 1.4rem;
+}
+	/* added for draggable */ 
+	.passphrase_inputs nav[role="search"].item:before {
+		display: block;
+		content: '═';
+		position: absolute;
+		left: 0px;
+		right: 0px;
+		margin: 0 auto;
+		height: 2rem;
+		width: 100%;
+		top: 0;
+		text-align: center;
+		font-size: 1.5rem;
+		color: #ccc;
+		line-height: 2rem;
+	}
+	.passphrase_inputs nav[role="search"].item[draggable=false] {
+		cursor: default;
+	}
+	.passphrase_inputs nav[role="search"].item[draggable=false]:before {
+		display: none;
+	}
+	.passphrase_inputs nav[role="search"].item .inp {
+		margin-bottom: 0px;
+		width: 100%;
+		box-sizing: border-box;
+	}
+	.passphrase_inputs nav[role="search"].item {
+		margin-right: 1%;
+		padding-top: 2rem;
+		padding-bottom: 0rem;
+		padding-left: 0;
+		padding-right: 0;
+		width: calc( 24% + (1% / 4) - 6px);
+		height: 2.8rem;
+		position: relative;
+		border-style: solid;
+		border-color: transparent;
+		border-width: 3px;
+		border-radius: 0.5rem;
+		margin-bottom: 0.6rem;
+	}
+/** -----------------------------------------------------
+ * Alert Messages
+ */
+:root{
+	--c_warning: 		rgb(255, 229, 169, 1);
+	--c_warning_dark: 	rgb(166, 93 , 0  , 1);
+	--c_error: 			rgb(255, 166, 166, 1);
+	--c_error_dark: 	rgb(138, 17 , 17 , 1);
+	--c_success: 		rgb(172, 240, 191, 1);
+	--c_success_dark: 	rgb(0  , 117, 33 , 1);
+	--c_info: 			rgb(217, 237, 247, 1);
+	--c_info_dark: 		rgb(58 , 135, 173, 1);
+}
+.alert ul {
+	margin-bottom: 1rem;
+	list-style: none;
+	padding: 0 !important;
+}
+.alert li{
+	padding: 0.5rem 0.8rem 0.55rem 0.8rem;
+	margin-bottom: 0.5rem;
+	border-radius: 3px;
+	line-height: 1.4rem;
+}
+.alert li:last-of-type{
+	margin-bottom: 0;
+}
+.alert.invalid,
+.alert.valid {
+
+	border-width: 1px;
+	border-style: solid;
+
+}
+.alert.reports-alert {
+	margin: 0;
+	display: block;
+}
+.alert.reports-alert > ul{
+	padding-left: 0 !important;
+}
+.alert-heading {
+	color: inherit
+}
+.alert .close {
+	position: relative;
+	top: -2px;
+	right: -21px;
+	line-height: 18px
+}
+.alert-block {
+	padding-top: 14px;
+	padding-bottom: 14px
+}
+.alert-block>p,
+.alert-block>ul {
+	margin-bottom: 0
+}
+.alert-block p+p {
+	margin-top: 5px
+}
+.alert {
+    clear: both;
+    display: block;
+}
+.alert .info {
+	color: var(--c_info_dark);
+	background-color: var(--c_info);
+}
+.alert .error {
+	color: var(--c_error_dark);
+	background-color: var(--c_error);
+}
+.alert .success{
+	color: var(--c_success_dark);
+	background-color: var(--c_success);
+}
+.alert .warning{
+	color: var(--c_warning_dark);
+	background-color: var(--c_warning);
+}
+/** -----------------------------------------------------
+ * Strength Bar Evaluation 
+ */
+.strengthbar {
+	box-sizing: border-box;
+	float: left;
+	position: relative;
+	clear: both;
+	margin-bottom: 0.5rem;
+}
+.strengthbar.hide {
+	display: none !important;
+}
+.strengthbar.strength_weak,
+.strengthbar.strength_fair,
+.strengthbar.strength_strong {
+	border-radius: 3px;
+	display: block;
+	height: auto;
+	line-height: 1.5em;
+	padding: 0.5rem 0.8rem 0.55rem 0.8rem;
+	position: relative;
+	width: 100%;
+	transition: width .2s linear 0s, background-color .2s linear 0s;
+	background-color:#eee;
+	color: #fff;
+}
+.strengthbar.strength_weak:before,
+.strengthbar.strength_fair:before,
+.strengthbar.strength_strong:before{
+	z-index: 1;
+	border-radius: 3px;
+	display: block;
+	height: auto;
+	line-height: 1.5em;
+	position: relative;
+	content: attr(data-content);
+	left: 0px;
+	top:0px;
+	bottom: 0px;
+	height: 100%;
+	width: 100%;
+}
+.strengthbar.strength_weak:after,
+.strengthbar.strength_fair:after,
+.strengthbar.strength_strong:after{
+	border-radius: 3px;
+	display: block;
+	height: auto;
+	position: absolute;
+	z-index: 0;
+	content: '';
+	left: 0px;
+	top:0px;
+	bottom: 0px;
+	height: 100%;
+	transition: width .2s linear 0s, background-color .5s linear 0s
+}
+.strengthbar.strength_weak:before{
+	color: var(--c_error_dark);
+}
+.strengthbar.strength_weak:after{
+	background-color: var(--c_error);
+}
+.strengthbar.strength_fair:before{
+	color: var(--c_warning_dark);
+}
+.strengthbar.strength_fair:after{
+	background-color: var(--c_warning);
+}
+.strengthbar.strength_strong:before{
+	color: #FFF;
+}
+.strengthbar.strength_strong:after{
+	background-color: var(--c_success_dark);
+}
+.strengthbar:after{
+	width: var(--percentage);
+}

@@ -1,0 +1,118 @@
+<svg version="1.0" id="vivarado_bip39ui_preview" x="0" y="0" viewBox="0 0 735 510" style="enable-background:new 0 0 735 510" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+    <style id="style1">
+        .input_font{opacity:.8;font-family:monospace;font-size:13.5px}
+        #rect_hr {fill:#ccc}
+        #strength_check_bg {fill:#eee}
+        #strength_check_fill {fill:#007521}
+        #strength_check_text {font-size:9px;font-family:monospace;fill:#fff}
+        #mnem_length_bg {fill:none;stroke:#000;stroke-width:1.5;stroke-miterlimit:10}
+        #mnem_length_arrow {font-size:13.3712px;font-family:monospace}
+        #mnem_length_text {font-size:10px;font-family:monospace}
+        #gen_bg {fill:none;stroke:#000;stroke-width:1.5;stroke-miterlimit:10}
+        #gen_text {font-size:10px;font-family:monospace;font-weight:bold;}
+        #alert_bg {fill:#acf0bf}
+        #alert_text {font-size:9px;font-family:monospace;fill:#007521}
+    </style>
+    <path id="rect_hr" d="M30.525 76.336h673.949v1.5H30.525z"/>
+    <g>
+        <path id="strength_check_bg" d="M33.239 433.938h668.522a2.714 2.714 0 0 1 2.714 2.714v17.522a2.714 2.714 0 0 1-2.714 2.714H33.239a2.714 2.714 0 0 1-2.714-2.714v-17.522a2.714 2.714 0 0 1 2.714-2.714z"/>
+        <path id="strength_check_fill" d="M33.239 433.938h536.573a2.714 2.714 0 0 1 2.714 2.714v17.522a2.714 2.714 0 0 1-2.714 2.714H33.239a2.714 2.714 0 0 1-2.714-2.714v-17.522a2.714 2.714 0 0 1 2.714-2.714z"/>
+        <text id="strength_check_text" x="37.5" y="448.5">mnemonic is strong: 80%</text>
+    </g>
+    <g>
+        <path id="mnem_length_bg" d="M160.909 50.609H33.672a2.381 2.381 0 0 1-2.381-2.381V28.944a2.381 2.381 0 0 1 2.381-2.381h127.237a2.381 2.381 0 0 1 2.381 2.381v19.284a2.38 2.38 0 0 1-2.381 2.381z"/>
+        <text id="mnem_length_arrow" x="147" y="43">▾</text>
+        <text id="mnem_length_text" x="39.5" y="42">256 Bit</text>
+    </g>
+    <g>
+        <path id="gen_bg" d="M701.305 50.609h-59.958a2.381 2.381 0 0 1-2.381-2.381V28.944a2.381 2.381 0 0 1 2.381-2.381h59.958a2.381 2.381 0 0 1 2.381 2.381v19.284a2.381 2.381 0 0 1-2.381 2.381z"/>
+        <text id="gen_text" x="647.5" y="42">Generate</text>
+    </g>
+    <g>
+        <path id="alert_bg" d="M33.239 461.387h668.522a2.714 2.714 0 0 1 2.714 2.714v16.624a2.714 2.714 0 0 1-2.714 2.714H33.239a2.714 2.714 0 0 1-2.714-2.714V464.1a2.714 2.714 0 0 1 2.714-2.713z"/>
+        <text id="alert_text" x="37.5" y="475.5">valid mnemonic</text>
+    </g>
+    
+    <g id="gtexts">
+        <text class="input_font" transform="translate(207.5 295)" >uncover</text>
+        <text class="input_font" transform="translate(36.5 295)" >soup</text>
+        <text class="input_font" transform="translate(379 295)" >pottery</text>
+        <text class="input_font" transform="translate(36.5 137.5)" >call</text>
+        <text class="input_font" transform="translate(207.5 190)" >admit</text>
+        <text class="input_font" transform="translate(379 137.5)" >hazard</text>
+        <text class="input_font" transform="translate(550 137.5)" >tube</text>
+        <text class="input_font" transform="translate(36.5 190)" >wish</text>
+        <text class="input_font" transform="translate(379 190)" >birth</text>
+        <text class="input_font" transform="translate(36.5 242.5)" >claw</text>
+        <text class="input_font" transform="translate(207.5 242.5)" >brand</text>
+        <text class="input_font" transform="translate(379 242.5)" >now</text>
+        <text class="input_font" transform="translate(36.5 348)" >blast</text>
+        <text class="input_font" transform="translate(207.5 348)" >ensure</text>
+        <text class="input_font" transform="translate(379 348)" >latin</text>
+        <text class="input_font" transform="translate(36.5 400.5)" >allow</text>
+        <text class="input_font" transform="translate(379 400.5)" >bread</text>
+        <text class="input_font" transform="translate(207.5 137.5)" >scorpion</text>
+        <text class="input_font" transform="translate(550 190)" >guide</text>
+        <text class="input_font" transform="translate(550 242.5)" >thing</text>
+        <text class="input_font" transform="translate(550 295)" >baby</text>
+        <text class="input_font" transform="translate(550 348)" >perfect</text>
+        <text class="input_font" transform="translate(207.5 400.5)" >plate</text>
+        <text class="input_font" transform="translate(550 400.5)"  style="font-style:italic">buddy</text>
+    </g>
+    <g id="ginputs">
+        <g id="ginput">
+            <path style="opacity:.5" d="M33.224 145.535h155a2.7 2.7 0 0 0 2.699-2.699v-3.5h-1.5v3.5c0 .664-.535 1.199-1.199 1.199h-155a1.2 1.2 0 0 1-1.199-1.199v-3.5h-1.5v3.5a2.702 2.702 0 0 0 2.699 2.699z" id="path30"/>
+        </g>
+        <use xlink:href="#ginput" id="use144" transform="translate(0 52.5)"/>
+        <use xlink:href="#ginput" id="use145" transform="translate(0 105)"/>
+        <use xlink:href="#ginput" id="use146" transform="translate(0 210)"/>
+        <use xlink:href="#ginput" id="use147" transform="translate(0 157.5)"/>
+        <use xlink:href="#ginput" id="use148" transform="translate(0 262.5)"/>
+        <use xlink:href="#ginput" id="use149" transform="translate(171 52.5)"/>
+        <use xlink:href="#ginput" id="use150" transform="translate(171 105)"/>
+        <use xlink:href="#ginput" id="use151" transform="translate(171 210)"/>
+        <use xlink:href="#ginput" id="use152" transform="translate(171 157.5)"/>
+        <use xlink:href="#ginput" id="use153" transform="translate(171 262.5)"/>
+        <use xlink:href="#ginput" id="use154" transform="translate(171)"/>
+        <use xlink:href="#ginput" id="use155" transform="translate(342.5 52.5)"/>
+        <use xlink:href="#ginput" id="use156" transform="translate(342.5 105)"/>
+        <use xlink:href="#ginput" id="use157" transform="translate(342.5 210)"/>
+        <use xlink:href="#ginput" id="use158" transform="translate(342.5 157.5)"/>
+        <use xlink:href="#ginput" id="use159" transform="translate(342.5 262.5)"/>
+        <use xlink:href="#ginput" id="use160" transform="translate(342.5)"/>
+        <use xlink:href="#ginput" id="use161" transform="translate(514 52.5)"/>
+        <use xlink:href="#ginput" id="use162" transform="translate(514 105)"/>
+        <use xlink:href="#ginput" id="use163" transform="translate(514 210)"/>
+        <use xlink:href="#ginput" id="use164" transform="translate(514 157.5)"/>
+        <use xlink:href="#ginput" id="use165" transform="translate(514 262.5)"/>
+        <use xlink:href="#ginput" id="use166" transform="translate(514)"/>
+    </g>
+    <g id="gdraggable" transform="translate(108 119)">
+        <g id="gdragb">
+            <text id="text54" fill="#ccc" class="drag_drop">═</text>
+        </g>
+        <use xlink:href="#gdragb" transform="translate(0 53)"/>
+        <use xlink:href="#gdragb" transform="translate(0 111)"/>
+        <use xlink:href="#gdragb" transform="translate(0 215)"/>
+        <use xlink:href="#gdragb" transform="translate(0 161)"/>
+        <use xlink:href="#gdragb" transform="translate(0 262.5)"/>
+        <use xlink:href="#gdragb" transform="translate(171 53)"/>
+        <use xlink:href="#gdragb" transform="translate(171 111)"/>
+        <use xlink:href="#gdragb" transform="translate(171 215)"/>
+        <use xlink:href="#gdragb" transform="translate(171 161)"/>
+        <use xlink:href="#gdragb" transform="translate(171 262.5)"/>
+        <use xlink:href="#gdragb" transform="translate(171)"/>
+        <use xlink:href="#gdragb" transform="translate(342.5 53)"/>
+        <use xlink:href="#gdragb" transform="translate(342.5 111)"/>
+        <use xlink:href="#gdragb" transform="translate(342.5 215)"/>
+        <use xlink:href="#gdragb" transform="translate(342.5 161)"/>
+        <use xlink:href="#gdragb" transform="translate(342.5 262.5)"/>
+        <use xlink:href="#gdragb" transform="translate(342.5)"/>
+        <use xlink:href="#gdragb" transform="translate(514 53)"/>
+        <use xlink:href="#gdragb" transform="translate(514 111)"/>
+        <use xlink:href="#gdragb" transform="translate(514 215)"/>
+        <use xlink:href="#gdragb" transform="translate(514 161)"/>
+        <use xlink:href="#gdragb" transform="translate(514 262.5)"/>
+        <use xlink:href="#gdragb" transform="translate(514)"/>
+    </g>
+</svg>

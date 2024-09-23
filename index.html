@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>BIP39 with Strength Check</title>
+	<link rel="stylesheet" type="text/css" href="./src/interface/styles/ui.css">
+	<link rel="stylesheet" type="text/css" href="./src/interface/styles/demo.css">
+	<link rel="icon" href="./_README/assets/media/vrd_logo_fill.svg" sizes="any" type="image/svg+xml">
+</head>
+<body>
+<section class='passphrase_section'>
+	<header>	
+		<img class="header_logo" src="./_README/assets/media/vrd_logo_wireframe.svg"><img class="header_project" src="./_README/assets/media/BIP39UI_logo.svg">
+	</header>
+	<hr>
+	<nav role="select" class="strength_select" name="phrase_length">
+		<input id="s_con_b" type="radio" name="phrase_length" class="con" value="null">
+		<input id="s_exp_b" type="radio" name="phrase_length" class="exp" autocomplete="off">
+		<label for="s_con_b" class="cl"></label>
+		<span class="lst"> 
+			<input id="str_a" type="radio" name="phrase_length" value="128">
+				<label for="str_a" data-value="128&nbsp;Bit"></label>
+			<input id="str_b" type="radio" name="phrase_length" value="256" checked="">
+				<label for="str_b" data-value="256&nbsp;Bit"></label>
+			<label class="ph" data-value="Mnemonic Length"></label>
+		</span>
+		<label for="s_exp_b" class="el"></label>
+	</nav>
+	<div class="generate">
+		<div class="btn lg ren_minimal btn_refresh">Generate</div>
+	</div>
+	<hr>
+	<div class='passphrase_inputs'>
+		<!-- <div class="pinp_half container"> -->
+			<nav role="search" class="item" data-index="1">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="2">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="3">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="4">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="5">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="6">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="7">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="8">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="9">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="10">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="11">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="12">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="13">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="14">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="15">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="16">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="17">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="18">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="19">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="20">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="21">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="22">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="23">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+			<nav role="search" class="item" data-index="24">
+				<div class="filter-container">
+					<input 
+						type="text" 
+						class="inp" 
+						placeholder="Word">
+					<div class="search-results"></div>
+				</div>
+			</nav>
+		<!-- </div> -->
+	</div>
+	<div class='strengthbar percentage-strength hide'></div>
+	<div class='alert reports-alert mnemonic-alert hide'></div>
+	<script src="./src/interface/mnemonicui.esm.js" type="module"></script>
+</body>
+</html>
