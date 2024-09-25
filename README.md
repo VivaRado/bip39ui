@@ -318,8 +318,9 @@ Finally is sets the **current checksum** element's input value to the first valu
 
 <br>
 
-**reflect\_active** ( ```strength``` )
+**reflect\_active** ( ```strength```, ```reflchs``` )
 > param **strength**: Number 128, 256 or 0. <br>
+> param **reflchs**: boolean (reflect checksum), default is false.<br>
 > 
 > ---
 > 
