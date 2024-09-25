@@ -47,7 +47,6 @@ class MnemonicInterface {
 	 * 9.  Reattach autcom_sc (sans checksum) to ante checksum (opposite).
 	 * 10. Reattach autcom_ac (avec checksum) to current checksum.
 	 * 11. Update the results pool of current checksum with valid checksums gathered in mnem_evaluate.
-	 * 12. Set the value of the current checksum to the first from valid checksums.
 	 */
 	reflect_checksum_elm(){
 		var self = this;
@@ -65,7 +64,6 @@ class MnemonicInterface {
 		self.autcom_sc.reattach(ante_chksm); // 9
 		self.autcom_ac.reattach(crnt_chksm); // 10
 		crnt_chksm.AutoComplete.setpool(self._cfg._vc); // 11
-		crnt_chksm.value = self._cfg._vc[0]; // 12
 	}
 	/**
 	 * Generate mnemonic and set to input fields.
@@ -92,14 +90,14 @@ class MnemonicInterface {
 	 * 5. Manage checksum states and groups.
 	 * 6. Update data-index
 	 * */
-	async reflect_active(strength){
+	async reflect_active(strength, reflchs=false){
 		var self = this;
 		var _p = self._cfg._ic; 
 		if(strength == 128){
 			self._cfg._ml = 12; // 1 
 			class_ops(_p, ['256', 'none'], '128', 'show'); // 2
 			await self.reflect_mnemonic(128); // 3
-			await self.mnem_evaluate(true, function(){ // 4
+			await self.mnem_evaluate(true, reflchs, function(){ // 4
 				self.reflect_checksum_elm(); // 5
 			});
 			self._cfg._rb.parentNode.classList.remove('hide');
@@ -107,7 +105,7 @@ class MnemonicInterface {
 			self._cfg._ml = 24;
 			class_ops(_p, 'none', ['128', '256'], 'show');
 			await self.reflect_mnemonic(256);
-			await self.mnem_evaluate(true, function(){
+			await self.mnem_evaluate(true, reflchs, function(){
 				self.reflect_checksum_elm();
 			});
 			self._cfg._rb.parentNode.classList.remove('hide');
@@ -131,7 +129,7 @@ class MnemonicInterface {
 	 * 7. Pass feedback for reflection.
 	 * 8. Remove error from checksum in case it was edited and left.
 	 */
-	async mnem_evaluate(updchs, cb){
+	async mnem_evaluate(updchs, reflchs, cb){
 		var self = this;
 		var elm = Array.from(self._cfg._ic.querySelectorAll(self._cfg._ns)).slice(0, self._cfg._ml); // 1
 		self._cfg._cm = self.gather_mnem(elm); // 2
@@ -145,7 +143,7 @@ class MnemonicInterface {
 		var ms = mnemstrong(mnem_str); // 6
 		self.reflect_feedback(mv, ms); // 7
 		var chsum_inp = elm[elm.length - 1];
-		if (updchs) {
+		if (reflchs) {
 			chsum_inp.value = self._cfg._vc[0];
 			chsum_inp.closest('nav').classList.remove("error"); // 8
 		}
@@ -182,7 +180,7 @@ class MnemonicInterface {
 			multi_container: self._cfg._ic,
 			pool: wordlist.bip39_eng,
 			onhide: async function() {
-				await self.mnem_evaluate(true, function(){ // 4
+				await self.mnem_evaluate(true, true, function(){ // 4
 					self.reflect_checksum_elm();
 				});
 			}
@@ -191,7 +189,7 @@ class MnemonicInterface {
 			pool: [],
 			multi_container: self._cfg._ic,
 			onhide: async function() {
-				await self.mnem_evaluate(false);
+				await self.mnem_evaluate(false, false);
 			}
 		});
 	}
@@ -236,7 +234,7 @@ class MnemonicInterface {
 					var elSource = self._cfg._ic.querySelectorAll(self._cfg._ns)[self.elDrag.dataset.index - 1]; // 4
 					self.autcom_sc.reattach(elSource); // 5
 					self.set_order_attr(); // 6
-					await self.mnem_evaluate(true, function(){ // 7
+					await self.mnem_evaluate(true, true, function(){ // 7
 						self.reflect_checksum_elm(); // 8
 					});
 				}
