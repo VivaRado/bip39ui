@@ -38,9 +38,6 @@ BIP39 editable mnemonic with checksum recalculation, strength evaluation on a va
 
 *   Company: VivaRado LLP
 *   Designer: Andreas Kalpakidis
-*   Twitter: [@vivarado](https://twitter.com/VivaRado)
-*   OpenSea: [@vivarado](https://opensea.io/vivarado)
-
 
 ---
 
