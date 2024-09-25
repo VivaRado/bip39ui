@@ -1,4 +1,4 @@
-// Interface / MnemonicInterface ∞ 1.0.6
+// Interface / MnemonicInterface ∞ 1.0.7
 import { AutoComplete } from './autocomplete.esm.js'
 import { mnemstrong } from '../mnemstrong/index.esm.js';
 import * as bip39 from '../bip39/index.clt.esm.js';
@@ -141,10 +141,12 @@ class MnemonicInterface {
 		var mnem_str = self._cfg._cm.join(' ');
 		var mv = await bip39.validateMnemonic(mnem_str, true); // 5
 		var ms = mnemstrong(mnem_str); // 6
-		self.reflect_feedback(mv, ms); // 7
-		var chsum_inp = elm[elm.length - 1];
-		reflchs && (chsum_inp.value = self._cfg._vc[0]);
-		updchs && chsum_inp.closest('nav').classList.remove("error"); // 8
+		var is_valid = self.reflect_feedback(mv, ms); // 7
+		if (is_valid) {
+			var chsum_inp = elm[elm.length - 1];
+			reflchs && (chsum_inp.value = self._cfg._vc[0]);
+			updchs && chsum_inp.closest('nav').classList.remove("error"); // 8
+		}
 		cb && cb(self._cfg._vc);
 	}
 	/**
@@ -165,6 +167,7 @@ class MnemonicInterface {
 		(mva.length >= 0) && display_alert(mva, self._cfg._ab, anim ); // 2
 		strength_check(self._cfg._sc, has_some(mva, 'error') ? 0 : ms.percentage); // 3
 		mva_success && self.clear_class('error');
+		return mva_success;
 	}
 	/**
 	 * Initiate the Autocomplete groups
