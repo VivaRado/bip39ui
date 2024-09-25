@@ -158,6 +158,8 @@ class MnemonicInterface {
 	 * */
 	reflect_feedback(mv, ms){
 		var self = this;
+		var data = mv
+		console.log('reflect_feedback', data)
 		var mva = [ // 1
 			...(mv.assertions.length == 0) ? ['success_valid_mnemonic'] : mv.assertions,
 			...(ms.feedback.length >= 0 ) ? ms.feedback.map((e)=> `${e.warning}: ${e.match}` ) : [], 

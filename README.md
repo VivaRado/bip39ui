@@ -512,7 +512,7 @@ Here is an overview of the **AutoComplete** functions:
 > 
 > ---
 > 
->  Input of words not currently in the search pool results in error.
+>  Input of words not currently in the search pool or input is empty, results in error.
 
 <br>
 

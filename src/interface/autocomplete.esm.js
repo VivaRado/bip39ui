@@ -1,4 +1,4 @@
-// Interface / AutoComplete ∞ 1.0.2
+// Interface / AutoComplete ∞ 1.0.3
 import { unique_id, create_el } from "./utils.esm.js";
 class AutoComplete {
 	constructor(ndlst, cfg) {
@@ -208,11 +208,11 @@ class AutoComplete {
 	// validations
 	/**
 	 * Input of words not currently in the search pool results in error.
-	 * 1. Search term exists but is not in the search pool.
+	 * 1. Search term exists but is not in the search pool. Or term is empty.
 	 * */
 	term_in_pool(ac, term){
 		var self = this;
-		var func = ( term.length >= 1 && !(ac[self.namespace].pool.indexOf(term) != -1) ) ? 'add' : 'remove'; // 1
+		var func = ( term.length >= 0 || !(ac[self.namespace].pool.indexOf(term) != -1) ) ? 'add' : 'remove'; // 1
 		ac[self.namespace].nav.classList[func]('error');
 	}
 	/**

@@ -1,4 +1,4 @@
-// BIP39 / Assert ∞ 1.0.0
+// BIP39 / Assert ∞ 1.0.1
 const { range } = require("./utils.cjs.js");
 function assertEntropy(entropy) {
 	var lengths = range(16,32,4);
@@ -26,11 +26,17 @@ function assertFunction(fn){
 }
 function assertWordlist(words, wordlist){
 	words.filter((word) => {
-		const index = wordlist.indexOf(word);
-		if (index === -1) {
+		if (word.length == 0) {
 			throw new TypeError(
-				`Invalid mnemonic type: Wrong word=${word}`
+				`Invalid mnemonic type: Empty Value${word}`
 			);
+		} else {
+			const index = wordlist.indexOf(word);
+			if (index === -1) {
+				throw new TypeError(
+					`Invalid mnemonic type: Wrong word=${word}`
+				);
+			}
 		}
 	});
 }

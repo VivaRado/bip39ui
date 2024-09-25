@@ -1,4 +1,4 @@
-// assert
+// BIP39 / Assert ∞ 1.0.1
 import { range } from "./utils.esm.js";
 function assertEntropy(entropy, report = false) {
 	var error_arr = [];
@@ -34,10 +34,15 @@ function assertNumber(n, report = false) {
 function assertWordlist(words, wordlist, report = false){
 	var error_arr = [];
 	words.filter((word) => {
-		const index = wordlist.indexOf(word);
-		if (index === -1) {
-			var err_text = `error_invalid_mnemonic_wrong_word_${word}`;
+		if (word.length == 0) {
+			var err_text = `error_invalid_mnemonic_empty_input`;
 			if(!report)throw new Error(err_text);error_arr.push(err_text);
+		} else {
+			const index = wordlist.indexOf(word);
+			if (index === -1) {
+				var err_text = `error_invalid_mnemonic_wrong_word_${word}`;
+				if(!report)throw new Error(err_text);error_arr.push(err_text);
+			}
 		}
 	});
 	return error_arr
