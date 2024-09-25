@@ -1,4 +1,4 @@
-// Interface / MnemonicInterface ∞ 1.0.4
+// Interface / MnemonicInterface ∞ 1.0.5
 import { AutoComplete } from './autocomplete.esm.js'
 import { mnemstrong } from '../mnemstrong/index.esm.js';
 import * as bip39 from '../bip39/index.clt.esm.js';
