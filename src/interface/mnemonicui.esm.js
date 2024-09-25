@@ -1,4 +1,4 @@
-// Interface / MnemonicInterface ∞ 1.0.5
+// Interface / MnemonicInterface ∞ 1.0.6
 import { AutoComplete } from './autocomplete.esm.js'
 import { mnemstrong } from '../mnemstrong/index.esm.js';
 import * as bip39 from '../bip39/index.clt.esm.js';
@@ -143,10 +143,8 @@ class MnemonicInterface {
 		var ms = mnemstrong(mnem_str); // 6
 		self.reflect_feedback(mv, ms); // 7
 		var chsum_inp = elm[elm.length - 1];
-		if (reflchs) {
-			chsum_inp.value = self._cfg._vc[0];
-			chsum_inp.closest('nav').classList.remove("error"); // 8
-		}
+		reflchs && (chsum_inp.value = self._cfg._vc[0]);
+		updchs && chsum_inp.closest('nav').classList.remove("error"); // 8
 		cb && cb(self._cfg._vc);
 	}
 	/**
@@ -158,15 +156,15 @@ class MnemonicInterface {
 	 * */
 	reflect_feedback(mv, ms){
 		var self = this;
-		var data = mv
-		console.log('reflect_feedback', data)
 		var mva = [ // 1
 			...(mv.assertions.length == 0) ? ['success_valid_mnemonic'] : mv.assertions,
 			...(ms.feedback.length >= 0 ) ? ms.feedback.map((e)=> `${e.warning}: ${e.match}` ) : [], 
 		];
-		var anim = (mva.length == 1 && has_some(mva, 'success')) ? true : false;
+		var mva_success = has_some(mva, 'success');
+		var anim = (mva.length == 1 && mva_success) ? true : false;
 		(mva.length >= 0) && display_alert(mva, self._cfg._ab, anim ); // 2
 		strength_check(self._cfg._sc, has_some(mva, 'error') ? 0 : ms.percentage); // 3
+		mva_success && self.clear_class('error');
 	}
 	/**
 	 * Initiate the Autocomplete groups
