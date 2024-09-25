@@ -39,7 +39,8 @@ BIP39 editable mnemonic with checksum recalculation, strength evaluation on a va
 *   Company: VivaRado LLP
 *   Designer: Andreas Kalpakidis
 *   Management: Madina Akhmatova
-  
+
+
 ---
 
 
@@ -337,13 +338,14 @@ Calls for mnemonic generation, evaluation and checksum element update and refres
 
 <br>
 
-**mnem\_evaluate** ( ```updchs```, ```cb``` )
+**mnem\_evaluate** ( ```updchs```, ```reflchs```, ```cb``` )
 > param **updchs**: boolean (update checksum). <br>
+> param **reflchs**: boolean (reflect checksum). <br>
 > param **cb**: callback function. <br>
 > 
 > ---
 > 
-> Runs validations and evaluations of current mnemonic with valid checksum. Forwards the feedback to ```reflect_feedback``` for visual alerts and strength bar visuals on the client. Updates checksum element value and current mnemonic array ```self._cfg._cm``` if ```updchs``` is true;
+> Runs validations and evaluations of current mnemonic with valid checksum. Forwards the feedback to ```reflect_feedback``` for visual alerts and strength bar visuals on the client. Updates current mnemonic array ```self._cfg._cm``` if ```updchs``` is true. Updates checksum element value if ```reflchs``` is true.
 
 <br>
 
