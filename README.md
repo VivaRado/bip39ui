@@ -4,13 +4,18 @@
 
 <div markdown='1' class="header_logo">
 
-![Screenshot](_README/assets/media/BIP39UI_logo.svg)
+
+![Screenshot](https://github.com/VivaRado/BIP39UI/raw/main/_README/assets/media/BIP39UI_logo.svg)
+
 
 </div>
 
+
 <div markdown='1' class="header_preview">
 
-![Screenshot](_README/assets/media/BIP39UI_preview.svg)
+
+![Screenshot](https://github.com/VivaRado/BIP39UI/raw/main/_README/assets/media/BIP39UI_preview.svg)
+
 
 </div>
 
@@ -300,7 +305,7 @@ Here is an overview of the **MnemonicUI** functions:
 
 <br>
 
-**reflect\_checksum\_elm** ()
+**reflectChecksumElm** ()
 > 
 >  Defines the interactivity of checksum elements by setting the element ```draggable``` attribute to _false_ or _true_ and _adding_ or _removing_ the ```checksum_elm``` class for **current checksum** and **ante checksum** respectively. <br><br>
 Distributes the appropriate wordlist array (dictionary or valid checksums) to the elements currently in the checksum positions (index 12 or 24) by retargeting the **Autocomplete** class using ```Autocomplete.destroy()``` on **current** and **ante checksum**, and ```Autocomplete.reattach()``` to ```self.autcom_sc``` and ```self.autcom_ac```. These are the two groups of autocompletes, the ```autcom_sc``` sans checksum (without checksums) and ```autcom_ac``` avec checksum (with checksums).<br><br>
@@ -309,7 +314,7 @@ Finally is sets the **current checksum** element's input value to the first valu
 
 <br>
 
-**reflect\_mnemonic** ( ```strength``` )
+**reflectMnemonic** ( ```strength``` )
 > param **strength**: Number 128 or 256. <br>
 > 
 > ---
@@ -318,7 +323,7 @@ Finally is sets the **current checksum** element's input value to the first valu
 
 <br>
 
-**reflect\_active** ( ```strength```, ```reflchs``` )
+**reflectActive** ( ```strength```, ```reflchs``` )
 > param **strength**: Number 128, 256 or 0. <br>
 > param **reflchs**: boolean (reflect checksum), default is false.<br>
 > 
@@ -329,7 +334,7 @@ Calls for mnemonic generation, evaluation and checksum element update and refres
 
 <br>
 
-**reflect\_feedback** ( ```mv```, ```ms``` )
+**reflectFeedback** ( ```mv```, ```ms``` )
 > param **mv**: Array (mnemonic validation).<br>
 > param **ms**: Array (mnemonic strength).<br>
 > 
@@ -339,7 +344,7 @@ Calls for mnemonic generation, evaluation and checksum element update and refres
 
 <br>
 
-**mnem\_evaluate** ( ```updchs```, ```reflchs```, ```cb``` )
+**mnemEvaluate** ( ```updchs```, ```reflchs```, ```cb``` )
 > param **updchs**: boolean (update checksum). <br>
 > param **reflchs**: boolean (reflect checksum). <br>
 > param **cb**: callback function. <br>
@@ -350,13 +355,13 @@ Calls for mnemonic generation, evaluation and checksum element update and refres
 
 <br>
 
-**init\_autocomplete\_groups** ()
+**initAutocompleteGroups** ()
 > 
 >  Initiate the **AutoComplete** groups ```self.autcom_sc``` and ```self.autcom_ac```.
 
 <br>
 
-**init\_draggable** ()
+**initDraggable** ()
 > 
 >  Initiate dragstart, dragover, drop, dragend events on passphrase inputs container. Prevent checksum elements from being draggable. Evaluate mnemonic on drop and generate a new mnemonic. Manage Autocomplete reattachment to input groups.
 
@@ -383,13 +388,13 @@ Here is an overview of the **AutoComplete** functions:
 
 <br>
 
-**external_events** ()
+**externalEvents** ()
 > 
 >  Setup external events, up and down arrow navigation, escape key press and click outside.
 
 <br>
 
-**selct\_evt** ( ```self```, ```ac``` )
+**selctEvt** ( ```self```, ```ac``` )
 > param **self**: passing object context to avoid event ```this``` collision. <br>
 > param **ac**: autocomplete input element. <br>
 > 
@@ -399,7 +404,7 @@ Here is an overview of the **AutoComplete** functions:
 
 <br>
 
-**input\_evt** ( ```self```, ```ac``` )
+**inputEvt** ( ```self```, ```ac``` )
 > param **self**: passing object context to avoid event ```this``` collision. <br>
 > param **ac**: autocomplete input element. <br>
 > 
@@ -409,7 +414,7 @@ Here is an overview of the **AutoComplete** functions:
 
 <br>
 
-**click\_evt** ( ```self```, ```ac``` )
+**clickEvt** ( ```self```, ```ac``` )
 > param **self**: passing object context to avoid event ```this``` collision. <br>
 > param **ac**: autocomplete input element. <br>
 > 
@@ -419,19 +424,19 @@ Here is an overview of the **AutoComplete** functions:
 
 <br>
 
-**exter\_evt\_handler** ()
+**exterEvtHandler** ()
 > 
 >  Close the autocomplete on click outside the autocomplete.
 
 <br>
 
-**arrow\_evt\_handler** ()
+**arrowEvtHandler** ()
 > 
 >  Navigate the autocomplete results with up and down arrow.
 
 <br>
 
-**click\_evt\_handler** ( ```ac``` )
+**clickEvtHandler** ( ```ac``` )
 > param **ac**: autocomplete input element. <br>
 > 
 > ---
@@ -440,7 +445,7 @@ Here is an overview of the **AutoComplete** functions:
 
 <br>
 
-**selct\_evt\_handler** ( ```ac``` )
+**selctEvtHandler** ( ```ac``` )
 > param **ac**: autocomplete input element. <br>
 > 
 > ---
@@ -449,7 +454,7 @@ Here is an overview of the **AutoComplete** functions:
 
 <br>
 
-**input\_evt\_handler** ( ```ac``` )
+**inputEvtHandler** ( ```ac``` )
 > param **ac**: autocomplete input element. <br>
 > 
 > ---
@@ -495,7 +500,7 @@ Here is an overview of the **AutoComplete** functions:
 
 <br>
 
-**filter\_res** ( ```ac```, ```marker```, ```term``` )
+**filterRes** ( ```ac```, ```marker```, ```term``` )
 > param **ac**: autocomplete input element. <br>
 > param **marker**: autocomplete dropdown item element. <br>
 > param **term**: search term <br>
@@ -506,7 +511,7 @@ Here is an overview of the **AutoComplete** functions:
 
 <br>
 
-**term\_in\_pool** ( ```ac```, ```term``` )
+**termInPool** ( ```ac```, ```term``` )
 > param **ac**: autocomplete input element. <br>
 > param **term**: search term <br>
 > 
@@ -516,7 +521,7 @@ Here is an overview of the **AutoComplete** functions:
 
 <br>
 
-**input\_reflection** ( ```e```, ```ac``` )
+**inputReflection** ( ```e```, ```ac``` )
 > param **e**: event. <br>
 > param **ac**: autocomplete input element. <br>
 > 
@@ -526,7 +531,7 @@ Here is an overview of the **AutoComplete** functions:
 
 <br>
 
-**fill\_search_pool** ( ```ac```, ```serv_array``` )
+**fillSearchPool** ( ```ac```, ```serv_array``` )
 > param **ac**: autocomplete input element. <br>
 > param **serv_array**: wordlist Array. <br>
 > 
@@ -536,7 +541,7 @@ Here is an overview of the **AutoComplete** functions:
 
 <br>
 
-**clear\_hl** ()
+**clearHiLight** ()
 > 
 >  Clear highlight from arrow navigation.
 
@@ -602,7 +607,7 @@ Here is an overview of the **Reports** functions:
 
 <br>
 
-**strength\_check** ( ```strength_bar```, ```value``` )
+**strengthCheck** ( ```strength_bar```, ```value``` )
 > param **strength_bar**: strength bar element. <br>
 > param **value**: Number. <br>
 > 
@@ -612,7 +617,7 @@ Here is an overview of the **Reports** functions:
 
 <br>
 
-**display\_alert** ( ```alert_data```, ```target_alert```, ```animation``` )
+**displayAlert** ( ```alert_data```, ```target_alert```, ```animation``` )
 > param **alert_data**: feedback array. <br>
 > param **target_alert**: alert element. <br>
 > param **animation**: Boolean. <br>

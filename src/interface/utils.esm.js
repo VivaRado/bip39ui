@@ -1,5 +1,5 @@
-// Interface / Utils ∞ 1.0.0
-function class_ops(ndlst, rem_classes, add_classes, prefix = ''){
+// Interface / Utils ∞ 1.0.1
+function classOps(ndlst, rem_classes, add_classes, prefix = ''){
 	var proc = function(el){
 		var oper = function(op, arr) {
 			if (Array.isArray(arr)) {
@@ -19,16 +19,16 @@ function class_ops(ndlst, rem_classes, add_classes, prefix = ''){
 		proc(ndlst);
 	}
 }
-function unique_id(length=8){ return parseInt(Math.ceil(Math.random() * Date.now()).toPrecision(length).toString().replace(".", ""))}
-function create_el(type, props) {
+function uniqueId(length=8){ return parseInt(Math.ceil(Math.random() * Date.now()).toPrecision(length).toString().replace(".", ""))}
+function createEl(type, props) {
 	var $e = document.createElement(type);
 	for (var prop in props) { $e.setAttribute(prop, props[prop]) };
 	return $e;
 }
-function has_some(arr, val){ return arr.some(x => x.indexOf(val) != -1) }
+function hasSome(arr, val){ return arr.some(x => x.indexOf(val) != -1) }
 export {
-	class_ops,
-	unique_id,
-	create_el,
-	has_some
+	classOps,
+	uniqueId,
+	createEl,
+	hasSome
 }

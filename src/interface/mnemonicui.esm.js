@@ -1,4 +1,4 @@
-// Interface / MnemonicInterface ∞ 1.0.7
+// Interface / MnemonicInterface ∞ 1.0.8
 import { AutoComplete } from './autocomplete.esm.js'
 import { mnemstrong } from '../mnemstrong/index.esm.js';
 import * as bip39 from '../bip39/index.clt.esm.js';
@@ -6,8 +6,8 @@ import { wordlist } from "../bip39/wordlists/wordlist.esm.js";
 import { sha } from '../bip39/deps/crypto.clt.esm.js';
 import { chunk } from "../bip39/deps/utils.esm.js";
 import { checksumWords } from "../bip39/index.clt.esm.js";
-import { class_ops, create_el, has_some } from "./utils.esm.js";
-import { display_alert, strength_check } from "./reports.esm.js";
+import { classOps, createEl, hasSome } from "./utils.esm.js";
+import { displayAlert, strengthCheck } from "./reports.esm.js";
 // Phrase Length Dropdown Control
 class MnemonicInterface {
 	constructor(cfg){
@@ -26,12 +26,12 @@ class MnemonicInterface {
 			_cm: []  													// current mnemonic
 		};
 		null==cfg&&(cfg={}),self._cfg={...self._def,...cfg};
-		self.init_autocomplete_groups();
-		self.init_draggable();
-		self._cfg._rb.addEventListener('click', async(e) => {  await self.reflect_active( self.get_active_val() ) });
-		self._cfg._sn.addEventListener('change', async(e) => { await self.reflect_active( 0 ) });
-		self._cfg._sa.addEventListener('change', async(e) => { await self.reflect_active( e.target.value ) });
-		self.reflect_active( self.get_active_val() );
+		self.initAutocompleteGroups();
+		self.initDraggable();
+		self._cfg._rb.addEventListener('click', async(e) => {  await self.reflectActive( self.getActiveVal() ) });
+		self._cfg._sn.addEventListener('change', async(e) => { await self.reflectActive( 0 ) });
+		self._cfg._sa.addEventListener('change', async(e) => { await self.reflectActive( e.target.value ) });
+		self.reflectActive( self.getActiveVal() );
 	}
 	/**
 	 * Defines the states and groups of checksum elements 
@@ -46,19 +46,19 @@ class MnemonicInterface {
 	 * 8.  Destroy Autocomplete but not element.
 	 * 9.  Reattach autcom_sc (sans checksum) to ante checksum (opposite).
 	 * 10. Reattach autcom_ac (avec checksum) to current checksum.
-	 * 11. Update the results pool of current checksum with valid checksums gathered in mnem_evaluate.
+	 * 11. Update the results pool of current checksum with valid checksums gathered in mnemEvaluate.
 	 */
-	reflect_checksum_elm(){
+	reflectChecksumElm(){
 		var self = this;
 		var nelm = self._cfg._ml; // 1
 		var inpelmar = Array.from( self._cfg._ic.querySelectorAll(self._cfg._ns) ); // 2
 		var currelms = inpelmar.slice(0, nelm); // 3
-		self._cfg._cm = self.gather_mnem(currelms); // 4
+		self._cfg._cm = self.gatherMnem(currelms); // 4
 		var clear_inx = nelm == 12 ? 24 : 12; // 5
 		var crnt_chksm = currelms[currelms.length - 1];
 		var ante_chksm = inpelmar[clear_inx - 1];
-		self.set_chsum_state(crnt_chksm, false); // 6
-		self.set_chsum_state(ante_chksm, true); // 7
+		self.setChsumState(crnt_chksm, false); // 6
+		self.setChsumState(ante_chksm, true); // 7
 		crnt_chksm.AutoComplete.destroy(false); // 8
 		ante_chksm.AutoComplete.destroy(false); // 8
 		self.autcom_sc.reattach(ante_chksm); // 9
@@ -72,7 +72,7 @@ class MnemonicInterface {
 	 * 3. Split mnemonic to array.
 	 * 4. Distribute values to input fields.
 	 * */
-	async reflect_mnemonic(strength){
+	async reflectMnemonic(strength){
 		var self = this;
 		var elm = self._cfg._ic.querySelectorAll(self._cfg._ns) // 1
 		var mg = await bip39.generateMnemonic(strength, true); // 2
@@ -90,33 +90,33 @@ class MnemonicInterface {
 	 * 5. Manage checksum states and groups.
 	 * 6. Update data-index
 	 * */
-	async reflect_active(strength, reflchs=false){
+	async reflectActive(strength, reflchs=false){
 		var self = this;
 		var _p = self._cfg._ic; 
 		if(strength == 128){
 			self._cfg._ml = 12; // 1 
-			class_ops(_p, ['256', 'none'], '128', 'show'); // 2
-			await self.reflect_mnemonic(128); // 3
-			await self.mnem_evaluate(true, reflchs, function(){ // 4
-				self.reflect_checksum_elm(); // 5
+			classOps(_p, ['256', 'none'], '128', 'show'); // 2
+			await self.reflectMnemonic(128); // 3
+			await self.mnemEvaluate(true, reflchs, function(){ // 4
+				self.reflectChecksumElm(); // 5
 			});
 			self._cfg._rb.parentNode.classList.remove('hide');
 		}else if(strength == 256){
 			self._cfg._ml = 24;
-			class_ops(_p, 'none', ['128', '256'], 'show');
-			await self.reflect_mnemonic(256);
-			await self.mnem_evaluate(true, reflchs, function(){
-				self.reflect_checksum_elm();
+			classOps(_p, 'none', ['128', '256'], 'show');
+			await self.reflectMnemonic(256);
+			await self.mnemEvaluate(true, reflchs, function(){
+				self.reflectChecksumElm();
 			});
 			self._cfg._rb.parentNode.classList.remove('hide');
 		}else if(strength == 0) {
-			class_ops(_p, ['128', '256'], 'none', 'show');
-			strength_check(self._cfg._sc,0);
+			classOps(_p, ['128', '256'], 'none', 'show');
+			strengthCheck(self._cfg._sc,0);
 			self._cfg._ab.innerHTML = '';
 			self._cfg._rb.parentNode.classList.add('hide');
 		}
-		self.clear_class('error');
-		self.set_order_attr(); // 6
+		self.clearClass('error');
+		self.setOrderAttr(); // 6
 	}
 	/**
 	 * 
@@ -129,10 +129,10 @@ class MnemonicInterface {
 	 * 7. Pass feedback for reflection.
 	 * 8. Remove error from checksum in case it was edited and left.
 	 */
-	async mnem_evaluate(updchs, reflchs, cb){
+	async mnemEvaluate(updchs, reflchs, cb){
 		var self = this;
 		var elm = Array.from(self._cfg._ic.querySelectorAll(self._cfg._ns)).slice(0, self._cfg._ml); // 1
-		self._cfg._cm = self.gather_mnem(elm); // 2
+		self._cfg._cm = self.gatherMnem(elm); // 2
 		if (updchs) { // 4
 			self._cfg._vc = await checksumWords(self._cfg._cm, wordlist.bip39_eng); // 3
 			self._cfg._cm = self._cfg._cm.slice(0, -1);
@@ -141,7 +141,7 @@ class MnemonicInterface {
 		var mnem_str = self._cfg._cm.join(' ');
 		var mv = await bip39.validateMnemonic(mnem_str, true); // 5
 		var ms = mnemstrong(mnem_str); // 6
-		var is_valid = self.reflect_feedback(mv, ms); // 7
+		var is_valid = self.reflectFeedback(mv, ms); // 7
 		if (is_valid) {
 			var chsum_inp = elm[elm.length - 1];
 			reflchs && (chsum_inp.value = self._cfg._vc[0]);
@@ -156,17 +156,17 @@ class MnemonicInterface {
 	 * 2. Display alerts if there are any, fade out only the success message, leave error and warning messages visible until fixed.
 	 * 3. Show strength bar if there are no errors, warnings are fair game.
 	 * */
-	reflect_feedback(mv, ms){
+	reflectFeedback(mv, ms){
 		var self = this;
 		var mva = [ // 1
 			...(mv.assertions.length == 0) ? ['success_valid_mnemonic'] : mv.assertions,
 			...(ms.feedback.length >= 0 ) ? ms.feedback.map((e)=> `${e.warning}: ${e.match}` ) : [], 
 		];
-		var mva_success = has_some(mva, 'success');
+		var mva_success = hasSome(mva, 'success');
 		var anim = (mva.length == 1 && mva_success) ? true : false;
-		(mva.length >= 0) && display_alert(mva, self._cfg._ab, anim ); // 2
-		strength_check(self._cfg._sc, has_some(mva, 'error') ? 0 : ms.percentage); // 3
-		mva_success && self.clear_class('error');
+		(mva.length >= 0) && displayAlert(mva, self._cfg._ab, anim ); // 2
+		strengthCheck(self._cfg._sc, hasSome(mva, 'error') ? 0 : ms.percentage); // 3
+		mva_success && self.clearClass('error');
 		return mva_success;
 	}
 	/**
@@ -176,15 +176,15 @@ class MnemonicInterface {
 	 * 3. Initiate the ```self.autcom_ac``` avec checksum, the inputs that are checksums.
 	 * 4. Evaluate every time the autocomplete dropdown gets hidden, due to selecting new value.
 	 * */
-	init_autocomplete_groups(){
+	initAutocompleteGroups(){
 		var self = this;
 		var inp_arr = Array.from(self._cfg._ic.querySelectorAll(self._cfg._ns)); // 1
 		self.autcom_sc = new AutoComplete(inp_arr.filter( (e, i) => (i != 11 && i != 23) ), { // 2
 			multi_container: self._cfg._ic,
 			pool: wordlist.bip39_eng,
 			onhide: async function() {
-				await self.mnem_evaluate(true, true, function(){ // 4
-					self.reflect_checksum_elm();
+				await self.mnemEvaluate(true, true, function(){ // 4
+					self.reflectChecksumElm();
 				});
 			}
 		});
@@ -192,7 +192,7 @@ class MnemonicInterface {
 			pool: [],
 			multi_container: self._cfg._ic,
 			onhide: async function() {
-				await self.mnem_evaluate(false, false);
+				await self.mnemEvaluate(false, false);
 			}
 		});
 	}
@@ -209,9 +209,9 @@ class MnemonicInterface {
 	 * 9.  Set draggable state to sans checksum and avec checksum input parent elements.
 	 * 10. Set Events.
 	 * */
-	init_draggable(){
+	initDraggable(){
 		var self = this;
-		var is_chsum = function(citm){ return (Array.from(citm.classList).indexOf(self._cfg._ce) != -1) }
+		var isChsum = function(citm){ return (Array.from(citm.classList).indexOf(self._cfg._ce) != -1) }
 		var events = {
 			dragstart(ev) { 
 				self.elDrag = this; 
@@ -219,15 +219,15 @@ class MnemonicInterface {
 			},
 			dragover(ev) { 
 				ev.preventDefault();
-				self.clear_class('dragover');
+				self.clearClass('dragover');
 				var citm = ev.target.closest(".item");
 				citm.classList.add('dragover');
-				ev.dataTransfer.dropEffect = is_chsum(citm) ? 'none' : 'move'; // 1
+				ev.dataTransfer.dropEffect = isChsum(citm) ? 'none' : 'move'; // 1
 			},
 			async drop(ev) {
-				self.clear_class('dragover');
+				self.clearClass('dragover');
 				var citm = ev.target.closest(".item");
-				if ( is_chsum(citm) ) { // 2
+				if ( isChsum(citm) ) { // 2
 					return
 				} else {
 					if (self.elDrag === this) return; // 3
@@ -236,15 +236,15 @@ class MnemonicInterface {
 					self.elDrag.classList.remove('dragging');
 					var elSource = self._cfg._ic.querySelectorAll(self._cfg._ns)[self.elDrag.dataset.index - 1]; // 4
 					self.autcom_sc.reattach(elSource); // 5
-					self.set_order_attr(); // 6
-					await self.mnem_evaluate(true, true, function(){ // 7
-						self.reflect_checksum_elm(); // 8
+					self.setOrderAttr(); // 6
+					await self.mnemEvaluate(true, true, function(){ // 7
+						self.reflectChecksumElm(); // 8
 					});
 				}
 			},
 			dragend(ev) {
-				self.clear_class('dragover');
-				self.clear_class('dragging');
+				self.clearClass('dragover');
+				self.clearClass('dragging');
 			}
 		};
 		Array.from(self._cfg._ic.children).forEach((el, i) => { // 9
@@ -258,15 +258,15 @@ class MnemonicInterface {
 			});
 		});
 	}
-	clear_class(c){class_ops(this._cfg._ic.querySelectorAll(`.${c}`), c)}
-	set_order_attr(){ var self = this; for (var i = 0; i < self._cfg._ic.children.length; i++) { self._cfg._ic.children[i].dataset.index = i + 1; } }
-	gather_mnem(elms){ return elms.map((itm)=>itm.value) };
-	set_chsum_state(elm, draggable){
+	clearClass(c){classOps(this._cfg._ic.querySelectorAll(`.${c}`), c)}
+	setOrderAttr(){ var self = this; for (var i = 0; i < self._cfg._ic.children.length; i++) { self._cfg._ic.children[i].dataset.index = i + 1; } }
+	gatherMnem(elms){ return elms.map((itm)=>itm.value) };
+	setChsumState(elm, draggable){
 		var clelm = elm.closest(".item");
 		clelm.classList[draggable ? 'remove' : 'add'](this._cfg._ce);
 		clelm.setAttribute('draggable',draggable);
 	}
-	get_active_val(){
+	getActiveVal(){
 		var si = this._cfg._sa.querySelector('input:checked');
 		return si ? si.value : 0;
 	}

@@ -1,12 +1,12 @@
-// Interface / AutoComplete ∞ 1.0.3
-import { unique_id, create_el } from "./utils.esm.js";
+// Interface / AutoComplete ∞ 1.0.4
+import { uniqueId, createEl } from "./utils.esm.js";
 class AutoComplete {
 	constructor(ndlst, cfg) {
 		var self = this;
 		self.namespace = "AutoComplete";
 		self.search_timeout;
-		cfg.id = unique_id();
-		var search_multi = create_el('div', {
+		cfg.id = uniqueId();
+		var search_multi = createEl('div', {
 			'class': 'multi multisearch',
 			'data-hash': cfg.id
 		});
@@ -19,9 +19,9 @@ class AutoComplete {
 			built_pool: 	false,
 			multsearch: 	search_multi,
 			mlts_cntr: 		search_multi.parentNode,
-			arrow_listener: self.arrow_evt_handler(),
-			escpe_listener: self.escpe_evt_handler(),
-			exter_listener: self.exter_evt_handler(),
+			arrow_listener: self.arrowEvtHandler(),
+			escpe_listener: self.escpeEvtHandler(),
+			exter_listener: self.exterEvtHandler(),
 			ev_arrow_added: false,
 			ev_escpe_added: false,
 			ev_exter_added: false,
@@ -41,7 +41,7 @@ class AutoComplete {
 	/**
 	 * Setup external events
 	 * */
-	external_events(){
+	externalEvents(){
 		var self = this;
 		var extevts = {'arrow':'keydown', 'escpe':'keyup', 'exter':'click'};
 		var actinp = self._cfg.active_input;
@@ -54,39 +54,39 @@ class AutoComplete {
 		}
 	}
 	// element events
-	selct_evt(self, ac) { ac.addEventListener("click", ac[self.namespace].selct_listener) }
-	input_evt(self, ac) { ac.addEventListener("keydown", ac[self.namespace].input_listener) }
-	click_evt(self, ac) { ac[self.namespace].isShown && ac.nextElementSibling.addEventListener('click', ac[self.namespace].click_listener) }
+	selctEvt(self, ac) { ac.addEventListener("click", ac[self.namespace].selct_listener) }
+	inputEvt(self, ac) { ac.addEventListener("keydown", ac[self.namespace].input_listener) }
+	clickEvt(self, ac) { ac[self.namespace].isShown && ac.nextElementSibling.addEventListener('click', ac[self.namespace].click_listener) }
 	// handlers
 	/**
 	 * Close the autocomplete on escape key press.
 	 * */
-	escpe_evt_handler = () => (e) => { 
+	escpeEvtHandler = () => (e) => { 
 		var self = this;
 		if (e && e.which == 27) {
 			var actinp = self._cfg.active_input;
 			if ( actinp.isShown ) {
 				actinp.hide();
-				self.clear_hl();
+				self.clearHiLight();
 			}
 		}
 	}
 	/**
 	 * Close the autocomplete on click outside the autocomplete.
 	 * */
-	exter_evt_handler = () => (e) => {
+	exterEvtHandler = () => (e) => {
 		var self = this;
 		var actinp = self._cfg.active_input;
 		if ( actinp.isShown && !actinp.nav.contains(e.target) ) {
 			actinp.hide();
-			self.clear_hl();
+			self.clearHiLight();
 			e.stopPropagation();
 		}
 	}
 	/**
 	 * Navigate the autocomplete results with up and down arrow.
 	 * */
-	arrow_evt_handler = () => (e) => {
+	arrowEvtHandler = () => (e) => {
 		var self = this;
 		var dest = self._cfg.keep_pool ? self._cfg.multsearch : e.target.nextElementSibling;
 		if (dest) {
@@ -113,28 +113,28 @@ class AutoComplete {
 	/**
 	 * Pick item in autocomplete dropdown on click.
 	 * */
-	click_evt_handler = (ac) => (e) => { 
+	clickEvtHandler = (ac) => (e) => { 
 		var self = this;
 		if(Array.from(e.target.classList).includes('itm')) {
 			e.target.classList.add("highlight");
 			ac.value = e.target.dataset.title;
 			ac[self.namespace].hide();
 			ac[self.namespace].curritm = 0;
-			self.term_in_pool(ac, ac.value);
+			self.termInPool(ac, ac.value);
 		}
 	}
 	/**
 	 * Select autocomplete input text on click.
 	 * */
-	selct_evt_handler = (ac) => (e) => { ac.select() }
+	selctEvtHandler = (ac) => (e) => { ac.select() }
 	/**
 	 * Initiate search pool filtering on input event.
 	 * */
-	input_evt_handler = (ac) => (e) => {
+	inputEvtHandler = (ac) => (e) => {
 		var self = this;
 		clearTimeout(self.search_timeout);
 		self.show(ac);
-		self.search_timeout = setTimeout(function() { self.input_reflection(e, ac); }, ac[self.namespace].stout);
+		self.search_timeout = setTimeout(function() { self.inputReflection(e, ac); }, ac[self.namespace].stout);
 		var sp_el = Array.from( document.querySelectorAll(".search-results.fade_in") );
 	}
 	// actions
@@ -143,9 +143,9 @@ class AutoComplete {
 	 * */
 	activate = (ac) => { 
 		var self = this;
-		self.clear_hl();
-		self.external_events();
-		self.click_evt(self, ac);
+		self.clearHiLight();
+		self.externalEvents();
+		self.clickEvt(self, ac);
 	}
 	/**
 	 * Toggle show / hide of autocomplete dropdown.
@@ -172,7 +172,7 @@ class AutoComplete {
 			ac[self.namespace].curritm = 0;
 			ac[self.namespace].isShown = false;
 		}
-		self.term_in_pool(ac, ac.value);
+		self.termInPool(ac, ac.value);
 		var active_results = self._cfg.multsearch.querySelectorAll('.search-results .itm');
 		Array.from(active_results).filter( (el) => { el.classList.remove("highlight", "show") });
 		if (self._cfg.active_input) {
@@ -210,7 +210,7 @@ class AutoComplete {
 	 * Input of words not currently in the search pool results in error.
 	 * 1. Search term exists but is not in the search pool. Or term is empty.
 	 * */
-	term_in_pool(ac, term){
+	termInPool(ac, term){
 		var self = this;
 		var func = ( term.length >= 0 || !(ac[self.namespace].pool.indexOf(term) != -1) ) ? 'add' : 'remove'; // 1
 		ac[self.namespace].nav.classList[func]('error');
@@ -221,7 +221,7 @@ class AutoComplete {
 	 * 2. Reset highlight by setting curritm to zero.
 	 * 3. There are no highlighted elements, highlight first and reset curritm.
 	 */
-	input_reflection(e, ac) {
+	inputReflection(e, ac) {
 		var self = this;
 		var dest = self._cfg.keep_pool ? self._cfg.multsearch : ac.nextElementSibling;
 		self._cfg.keep_pool && ac.nextElementSibling.append(dest);
@@ -229,15 +229,15 @@ class AutoComplete {
 		var term = e.target.value.toLowerCase();
 		_results.forEach(function(itm) { self.filter_res(ac, itm, term) });
 		var active_results = dest.querySelectorAll('.itm.show');
-		self.term_in_pool(ac, term);
+		self.termInPool(ac, term);
 		if (active_results.length == 0) {
 			dest.classList.remove('fade_in');
-			self.clear_hl();
+			self.clearHiLight();
 		} else {
 			if (active_results.length == 1 && term == active_results[0].dataset.title) { // 1
 				ac[self.namespace].curritm = 0; // 2
 				dest.classList.remove('fade_in');
-				self.clear_hl();
+				self.clearHiLight();
 			} else {
 				dest.classList.add('fade_in');
 			}
@@ -250,14 +250,14 @@ class AutoComplete {
 	/**
 	 * Create autocomplete element pool from provided array.
 	 */
-	fill_search_pool(ac, serv_array) {
+	fillSearchPool(ac, serv_array) {
 		var self = this;
 		var dest = self._cfg.keep_pool ? self._cfg.multsearch : ac.nextElementSibling;
 		if (serv_array) {
 			ac[self.namespace].pool = serv_array;
 			dest.innerHTML = "";
 			for (var i = 0; i < serv_array.length; i++) {
-				var search_item = create_el('div', {
+				var search_item = createEl('div', {
 					'class': 'itm',
 					'data-title': serv_array[i]
 				});
@@ -269,7 +269,7 @@ class AutoComplete {
 	/**
 	 * Clear highlight from arrow navigation.
 	 */
-	clear_hl(){
+	clearHiLight(){
 		var lst = document.querySelectorAll(".search-results .itm");
 		Array.from(lst).filter( el => { el.classList.remove("highlight", "show"); });
 	}
@@ -284,16 +284,16 @@ class AutoComplete {
 			hide: 		() => { self.hide(ac) },
 			show: 		() => { self.show(ac) },
 			toggle: 	() => { self.toggle(ac) },
-			setpool: 	(data) => { self.fill_search_pool(ac, data) },
+			setpool: 	(data) => { self.fillSearchPool(ac, data) },
 			destroy: 	(remove) => { self.destroy(self, ac, remove) },
-			click_listener: self.click_evt_handler(ac),
-			input_listener: self.input_evt_handler(ac),
-			selct_listener: self.selct_evt_handler(ac),
+			click_listener: self.clickEvtHandler(ac),
+			input_listener: self.inputEvtHandler(ac),
+			selct_listener: self.selctEvtHandler(ac),
 			...self._cfg
 		};
 		self._cfg.keep_pool && ac[self.namespace].nav.classList.add('multi_share');
 		if (self._cfg.built_pool == false) {
-			self.fill_search_pool(ac, ac[self.namespace].pool);
+			self.fillSearchPool(ac, ac[self.namespace].pool);
 			self._cfg.built_pool = true;
 		};
 	}
@@ -302,8 +302,8 @@ class AutoComplete {
 	 */
 	interact(ac) {
 		var self = this;
-		self.selct_evt(self, ac);
-		self.input_evt(self, ac);
+		self.selctEvt(self, ac);
+		self.inputEvt(self, ac);
 	}
 	/**
 	 * Reattach input to autocomplete class
