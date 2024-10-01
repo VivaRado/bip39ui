@@ -1,4 +1,4 @@
-// Interface / AutoComplete ∞ 1.0.4
+// Interface / AutoComplete ∞ 1.0.5
 import { uniqueId, createEl } from "./utils.esm.js";
 class AutoComplete {
 	constructor(ndlst, cfg) {
@@ -214,6 +214,7 @@ class AutoComplete {
 		var self = this;
 		var func = ( term.length >= 0 || !(ac[self.namespace].pool.indexOf(term) != -1) ) ? 'add' : 'remove'; // 1
 		ac[self.namespace].nav.classList[func]('error');
+		console.log('-')
 	}
 	/**
 	 * Manage the way the autocomplete reacts to input value.
@@ -229,7 +230,6 @@ class AutoComplete {
 		var term = e.target.value.toLowerCase();
 		_results.forEach(function(itm) { self.filter_res(ac, itm, term) });
 		var active_results = dest.querySelectorAll('.itm.show');
-		self.termInPool(ac, term);
 		if (active_results.length == 0) {
 			dest.classList.remove('fade_in');
 			self.clearHiLight();

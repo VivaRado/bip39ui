@@ -146,9 +146,6 @@ class MnemonicInterface {
 			var chsum_inp = elm[elm.length - 1];
 			reflchs && (chsum_inp.value = self._cfg._vc[0]);
 			updchs && chsum_inp.closest('nav').classList.remove("error"); // 8
-			setTimeout(function(){
-				self.clearClass('error');
-			},200);
 		}
 		cb && cb(self._cfg._vc);
 	}
