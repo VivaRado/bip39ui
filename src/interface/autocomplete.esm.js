@@ -1,4 +1,4 @@
-// Interface / AutoComplete ∞ 1.0.5
+// Interface / AutoComplete ∞ 1.0.6
 import { uniqueId, createEl } from "./utils.esm.js";
 class AutoComplete {
 	constructor(ndlst, cfg) {
@@ -55,7 +55,13 @@ class AutoComplete {
 	}
 	// element events
 	selctEvt(self, ac) { ac.addEventListener("click", ac[self.namespace].selct_listener) }
-	inputEvt(self, ac) { ac.addEventListener("keydown", ac[self.namespace].input_listener) }
+	inputEvt(self, ac) { 
+		ac.addEventListener("keydown", ac[self.namespace].input_listener) 
+		ac.addEventListener("keyup", function(e){
+			var val = e.target.value.toLowerCase();
+			e.target.value = val;
+		});
+	}
 	clickEvt(self, ac) { ac[self.namespace].isShown && ac.nextElementSibling.addEventListener('click', ac[self.namespace].click_listener) }
 	// handlers
 	/**
@@ -214,7 +220,6 @@ class AutoComplete {
 		var self = this;
 		var func = ( term.length >= 0 || !(ac[self.namespace].pool.indexOf(term) != -1) ) ? 'add' : 'remove'; // 1
 		ac[self.namespace].nav.classList[func]('error');
-		console.log('-')
 	}
 	/**
 	 * Manage the way the autocomplete reacts to input value.
