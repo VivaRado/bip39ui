@@ -1,6 +1,6 @@
 {
   "name": "bip39ui",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "User Interface to Generate a BIP39 (128/256) and Check the Strength. Client Side and Server Side.",
   "main": "index.js",
   "scripts": {
