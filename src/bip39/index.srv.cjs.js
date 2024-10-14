@@ -32,7 +32,7 @@ function generateMnemonic(strength, report, wordlist) {
 	wordlist = wordlist || DEFAULT_WORDLIST;
 	strength = strength || 128;
 	var assertions = [...assertNumber(strength, report), ...assertStrength(strength, report), ...assertIsSet(wordlist, report)]
-	var entmnem = entropyToMnemonic(crypto.getRandomValues( new Uint8Array(strength / 8 ) ), wordlist)
+	var entmnem = entropyToMnemonic(crypto.getRandomValues( new Uint8Array(strength / 8 ) ), report, wordlist)
 	if (report) { return { mnemonic: entmnem.mnemonic, assertions: [...assertions, ...entmnem.assertions] } }
 	return entmnem
 }
