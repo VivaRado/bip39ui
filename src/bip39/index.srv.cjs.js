@@ -34,7 +34,7 @@ function generateMnemonic(strength, report, wordlist) {
 	var assertions = [...assertNumber(strength, report), ...assertStrength(strength, report), ...assertIsSet(wordlist, report)]
 	var entmnem = entropyToMnemonic(crypto.getRandomValues( new Uint8Array(strength / 8 ) ), wordlist)
 	if (report) { return { mnemonic: entmnem.mnemonic, assertions: [...assertions, ...entmnem.assertions] } }
-	return entmnem.mnemonic
+	return entmnem
 }
 /**
  * Reversible: Converts raw entropy in form of byte array to mnemonic string.
