@@ -1,4 +1,4 @@
-// BIP39 ∞ 1.0.0
+// BIP39 ∞ 1.0.1
 import {
 	sha,
 	pbkdf2,
@@ -37,7 +37,7 @@ async function generateMnemonic(strength, report, wordlist) {
 	var assertions = [...assertNumber(strength, report), ...assertStrength(strength, report), ...assertIsSet(wordlist, report)]
 	var entmnem = await entropyToMnemonic( randomBytes(strength / 8), report);
 	if (report) { return { mnemonic: entmnem.mnemonic, assertions: [...assertions, ...entmnem.assertions] } }
-	return entmnem
+	return entmnem.mnemonic
 }
 /**
  * Reversible: Converts raw entropy in form of byte array to mnemonic string.

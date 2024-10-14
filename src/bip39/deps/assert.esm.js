@@ -1,4 +1,4 @@
-// BIP39 / Assert ∞ 1.0.1
+// BIP39 / Assert ∞ 1.0.2
 import { range } from "./utils.esm.js";
 function assertEntropy(entropy, report = false) {
 	var error_arr = [];
