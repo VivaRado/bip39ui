@@ -101,8 +101,7 @@ function validateMnemonic(mnemonic, report, wordlist) {
  */
 function mnemonicToSeed(mnemonic, passphrase = "", report, wordlist, callback) {
 	wordlist = wordlist || DEFAULT_WORDLIST;
-	assertIsSet(wordlist);
-	assertWords(mnemonic.split(' '))
+	var assertions = [...assertIsSet(wordlist, report), ...assertWords(mnemonic.split(' '), report)];
 	const encodedMnemonicUint8Array = encodeMnemonicForSeedDerivation(mnemonic, wordlist)
 	crypto.pbkdf2( 
 			encodedMnemonicUint8Array, 
@@ -112,7 +111,9 @@ function mnemonicToSeed(mnemonic, passphrase = "", report, wordlist, callback) {
 			'sha512', 
 		(err, derived) => {
 			if (err) throw err; 
-			callback( Buffer.from( new Uint8Array(derived) ).toString('hex') )
+			var mnemseed = Buffer.from( new Uint8Array(derived) ).toString('hex')
+			if (report) { callback( { seed: mnemseed, assertions: assertions } ) }
+			return mnemseed
 		}
 	);
 }
