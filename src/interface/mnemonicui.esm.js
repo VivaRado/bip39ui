@@ -140,7 +140,10 @@ class MnemonicInterface {
 		}
 		var mnem_str = self._cfg._cm.join(' ');
 		var mv = await bip39.validateMnemonic(mnem_str, true); // 5
-		var ms = mnemstrong(mnem_str); // 6
+		var ms = [];
+		if (self._cfg.mnemstrong) {
+			ms = mnemstrong(mnem_str); // 6
+		}
 		var is_valid = self.reflectFeedback(mv, ms); // 7
 		if (is_valid) {
 			var chsum_inp = elm[elm.length - 1];
