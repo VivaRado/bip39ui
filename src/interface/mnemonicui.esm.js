@@ -1,4 +1,4 @@
-// Interface / MnemonicInterface ∞ 1.0.8
+// Interface / MnemonicInterface ∞ 1.0.9
 import { AutoComplete } from './autocomplete.esm.js'
 import { mnemstrong } from '../mnemstrong/index.esm.js';
 import * as bip39 from '../bip39/index.clt.esm.js';
@@ -75,11 +75,13 @@ class MnemonicInterface {
 	 * */
 	async reflectMnemonic(strength){
 		var self = this;
-		var elm = self._cfg._ic.querySelectorAll(self._cfg._ns) // 1
-		var mg = await bip39.generateMnemonic(strength, true); // 2
-		var mg_split = mg.mnemonic.split(' '); // 3
-		for (var i = 0; i < elm.length; i++) { // 4
-			elm[i].value = mg_split[i];
+		if (self._cfg.populate) {
+			var elm = self._cfg._ic.querySelectorAll(self._cfg._ns) // 1
+			var mg = await bip39.generateMnemonic(strength, true); // 2
+			var mg_split = mg.mnemonic.split(' '); // 3
+			for (var i = 0; i < elm.length; i++) { // 4
+				elm[i].value = mg_split[i];
+			}
 		}
 	}
 	/**
@@ -142,6 +144,10 @@ class MnemonicInterface {
 		}
 		var mnem_str = self._cfg._cm.join(' ');
 		var mv = await bip39.validateMnemonic(mnem_str, true); // 5
+		if (!self._cfg.populate){
+			var mva_ignore_empty = mv.assertions.filter(x => x.indexOf('empty_input') == -1);
+			mv.assertions = mva_ignore_empty;
+		}
 		var ms = {};
 		if (self._cfg.mnemstrong) {
 			ms = mnemstrong(mnem_str); // 6
@@ -164,7 +170,7 @@ class MnemonicInterface {
 	reflectFeedback(mv, ms){
 		var self = this;
 		var mva = [ // 1
-			...(mv.assertions.length == 0) ? ['success_valid_mnemonic'] : mv.assertions,
+			...(mv.assertions.length == 0 && self._cfg.populate) ? ['success_valid_mnemonic'] : mv.assertions,
 			...(ms.feedback && ms.feedback.length >= 0 ) ? ms.feedback.map((e)=> `${e.warning}: ${e.match}` ) : [], 
 		];
 		var mva_success = hasSome(mva, 'success');

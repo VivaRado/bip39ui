@@ -1,4 +1,4 @@
-// Interface / AutoComplete ∞ 1.0.6
+// Interface / AutoComplete ∞ 1.0.7
 import { uniqueId, createEl } from "./utils.esm.js";
 class AutoComplete {
 	constructor(ndlst, cfg) {
@@ -218,7 +218,7 @@ class AutoComplete {
 	 * */
 	termInPool(ac, term){
 		var self = this;
-		var func = ( term.length >= 0 || !(ac[self.namespace].pool.indexOf(term) != -1) ) ? 'add' : 'remove'; // 1
+		var func = ( term.length >= 0 && !(ac[self.namespace].pool.indexOf(term) != -1) ) ? 'add' : 'remove'; // 1
 		ac[self.namespace].nav.classList[func]('error');
 	}
 	/**

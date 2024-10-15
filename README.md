@@ -302,16 +302,31 @@ Initiating the Mnemonic user interface by including the MnemonicUI class:
 <script src="./src/interface/mnemonicui.esm.js" type="module"></script>
 ```
 
-The code bellow is included in the file above. If you do not want the mnemonic strength check to run, include ```mnemostrong:false``` in the config. Both ```bip39``` and ```MnemonicUI``` are exposed to the window, so you can run them at will.
+The code bellow is included in the file above. Both ```bip39``` and ```MnemonicUI``` are exposed to the window, so you can run them at will.
+
+#### Config Parameters
+
+**mnemostrong**:
+If you do not want the mnemonic strength check to run, include ```mnemostrong:false``` in the config.
+
+**mnemostrong**:
+If you do not want the mnemonic strength check to run, include ```mnemostrong:false``` in the config.
 
 ```
+// For active interface during mnemonic creation.
+new MnemonicInterface();
+
+// For passive interface during mnemonic recovery.
 var config = {
-  "mnemstrong":false
+  "mnemstrong":false,
+  "populate": false
 }
 
 new MnemonicInterface(config);
 
 ```
+
+---
 
 ### **Functions**
 <sub>Design / Interface / MnemonicUI / Functions</sub>
