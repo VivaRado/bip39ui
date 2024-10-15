@@ -23,7 +23,8 @@ class MnemonicInterface {
 			_ns: 'nav[role="search"] input', 							// search element selector
 			_ce: 'checksum_elm', 										// checksum element selector
 			_vc: [], 													// valid checksums
-			_cm: []  													// current mnemonic
+			_cm: [],  													// current mnemonic
+			mnemstrong: true
 		};
 		null==cfg&&(cfg={}),self._cfg={...self._def,...cfg};
 		self.initAutocompleteGroups();
@@ -114,6 +115,7 @@ class MnemonicInterface {
 			strengthCheck(self._cfg._sc,0);
 			self._cfg._ab.innerHTML = '';
 			self._cfg._rb.parentNode.classList.add('hide');
+			displayAlert('warning_select_mnemonic_length', self._cfg._ab, true )
 		}
 		self.clearClass('error');
 		self.setOrderAttr(); // 6
@@ -140,7 +142,7 @@ class MnemonicInterface {
 		}
 		var mnem_str = self._cfg._cm.join(' ');
 		var mv = await bip39.validateMnemonic(mnem_str, true); // 5
-		var ms = [];
+		var ms = {};
 		if (self._cfg.mnemstrong) {
 			ms = mnemstrong(mnem_str); // 6
 		}
@@ -163,7 +165,7 @@ class MnemonicInterface {
 		var self = this;
 		var mva = [ // 1
 			...(mv.assertions.length == 0) ? ['success_valid_mnemonic'] : mv.assertions,
-			...(ms.feedback.length >= 0 ) ? ms.feedback.map((e)=> `${e.warning}: ${e.match}` ) : [], 
+			...(ms.feedback && ms.feedback.length >= 0 ) ? ms.feedback.map((e)=> `${e.warning}: ${e.match}` ) : [], 
 		];
 		var mva_success = hasSome(mva, 'success');
 		var anim = (mva.length == 1 && mva_success) ? true : false;
@@ -274,6 +276,10 @@ class MnemonicInterface {
 		return si ? si.value : 0;
 	}
 }
+
+window['MnemonicInterface'] = MnemonicInterface;
+window['bip39'] = bip39;
+
 window.addEventListener('load', () => {
 	var mnemui = new MnemonicInterface();
 });

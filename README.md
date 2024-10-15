@@ -4,18 +4,13 @@
 
 <div markdown='1' class="header_logo">
 
-
 ![Screenshot](https://github.com/VivaRado/BIP39UI/raw/main/_README/assets/media/BIP39UI_logo.svg)
-
 
 </div>
 
-
 <div markdown='1' class="header_preview">
 
-
 ![Screenshot](https://github.com/VivaRado/BIP39UI/raw/main/_README/assets/media/BIP39UI_preview.svg)
-
 
 </div>
 
@@ -294,6 +289,29 @@ The ```src/interface``` contains **ESM** (ECMAScript modules) only, the CSS is l
 This module is responsible for all the interface interactions, and binds together all the rest of the interface classes. It initiates the MnemStrong class and Autocomplete class and manages their state in relation to the mnemonic and checksum recalculation.
 
 ---
+
+### **Usage**
+<sub>Design / Interface / MnemonicUI / Usage</sub>
+
+<br>
+
+
+Initiating the Mnemonic user interface by including the MnemonicUI class:
+
+```
+<script src="./src/interface/mnemonicui.esm.js" type="module"></script>
+```
+
+The code bellow is included in the file above. If you do not want the mnemonic strength check to run, include ```mnemostrong:false``` in the config. Both ```bip39``` and ```MnemonicUI``` are exposed to the window, so you can run them at will.
+
+```
+var config = {
+  "mnemstrong":false
+}
+
+new MnemonicInterface(config);
+
+```
 
 ### **Functions**
 <sub>Design / Interface / MnemonicUI / Functions</sub>
