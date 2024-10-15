@@ -1,4 +1,4 @@
-// Interface / MnemonicInterface ∞ 1.0.9
+// Interface / MnemonicInterface ∞ 1.0.10
 import { AutoComplete } from './autocomplete.esm.js'
 import { mnemstrong } from '../mnemstrong/index.esm.js';
 import * as bip39 from '../bip39/index.clt.esm.js';
@@ -24,7 +24,8 @@ class MnemonicInterface {
 			_ce: 'checksum_elm', 										// checksum element selector
 			_vc: [], 													// valid checksums
 			_cm: [],  													// current mnemonic
-			mnemstrong: true
+			mnemstrong: true,
+			populate: true
 		};
 		null==cfg&&(cfg={}),self._cfg={...self._def,...cfg};
 		self.initAutocompleteGroups();
