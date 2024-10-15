@@ -309,8 +309,8 @@ The code bellow is included in the file above. Both ```bip39``` and ```MnemonicU
 **mnemostrong**:
 If you do not want the mnemonic strength check to run, include ```mnemostrong:false``` in the config.
 
-**mnemostrong**:
-If you do not want the mnemonic strength check to run, include ```mnemostrong:false``` in the config.
+**populate**:
+If you do not want the input fields populated, include ```populate:false``` in the config.
 
 ```
 // For active interface during mnemonic creation.
