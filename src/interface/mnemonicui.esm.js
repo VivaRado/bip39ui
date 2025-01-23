@@ -30,9 +30,12 @@ class MnemonicInterface {
 		null==cfg&&(cfg={}),self._cfg={...self._def,...cfg};
 		self.initAutocompleteGroups();
 		self.initDraggable();
-		self._cfg._rb.addEventListener('click', async(e) => {  await self.reflectActive( self.getActiveVal() ) });
+		if (self._cfg._rb) {
+			self._cfg._rb.addEventListener('click', async(e) => {  await self.reflectActive( self.getActiveVal() ) });
+		}
 		self._cfg._sn.addEventListener('change', async(e) => { await self.reflectActive( 0 ) });
 		self._cfg._sa.addEventListener('change', async(e) => { await self.reflectActive( e.target.value ) });
+
 		self.reflectActive( self.getActiveVal() );
 	}
 	/**
@@ -101,23 +104,20 @@ class MnemonicInterface {
 			self._cfg._ml = 12; // 1 
 			classOps(_p, ['256', 'none'], '128', 'show'); // 2
 			await self.reflectMnemonic(128); // 3
-			await self.mnemEvaluate(true, reflchs, function(){ // 4
+			await self.mnemEvaluate(true, reflchs, false, function(){ // 4
 				self.reflectChecksumElm(); // 5
 			});
-			self._cfg._rb.parentNode.classList.remove('hide');
 		}else if(strength == 256){
 			self._cfg._ml = 24;
 			classOps(_p, 'none', ['128', '256'], 'show');
 			await self.reflectMnemonic(256);
-			await self.mnemEvaluate(true, reflchs, function(){
+			await self.mnemEvaluate(true, reflchs, false, function(){
 				self.reflectChecksumElm();
 			});
-			self._cfg._rb.parentNode.classList.remove('hide');
 		}else if(strength == 0) {
 			classOps(_p, ['128', '256'], 'none', 'show');
 			strengthCheck(self._cfg._sc,0);
 			self._cfg._ab.innerHTML = '';
-			self._cfg._rb.parentNode.classList.add('hide');
 			displayAlert('warning_select_mnemonic_length', self._cfg._ab, true )
 		}
 		self.clearClass('error');
@@ -134,29 +134,34 @@ class MnemonicInterface {
 	 * 7. Pass feedback for reflection.
 	 * 8. Remove error from checksum in case it was edited and left.
 	 */
-	async mnemEvaluate(updchs, reflchs, cb){
+	async mnemEvaluate(updchs, reflchs, dragchs, cb){
 		var self = this;
 		var elm = Array.from(self._cfg._ic.querySelectorAll(self._cfg._ns)).slice(0, self._cfg._ml); // 1
 		self._cfg._cm = self.gatherMnem(elm); // 2
 		if (updchs) { // 4
 			self._cfg._vc = await checksumWords(self._cfg._cm, wordlist.bip39_eng); // 3
-			self._cfg._cm = self._cfg._cm.slice(0, -1);
-			self._cfg._cm.push(self._cfg._vc[0]);
+			if ( dragchs ) {
+				self._cfg._cm = self._cfg._cm.slice(0, -1);
+				self._cfg._cm.push(self._cfg._vc[0]);
+			}
+			if ( self._cfg.populate == true && self._cfg._cm.filter(x => x === "").length == 1) {
+				self._cfg._cm = self._cfg._cm.slice(0, -1);
+				self._cfg._cm.push(self._cfg._vc[0]);
+			}
 		}
 		var mnem_str = self._cfg._cm.join(' ');
 		var mv = await bip39.validateMnemonic(mnem_str, true); // 5
-		if (!self._cfg.populate){
-			var mva_ignore_empty = mv.assertions.filter(x => x.indexOf('empty_input') == -1);
-			mv.assertions = mva_ignore_empty;
-		}
 		var ms = {};
 		if (self._cfg.mnemstrong) {
 			ms = mnemstrong(mnem_str); // 6
 		}
 		var is_valid = self.reflectFeedback(mv, ms); // 7
+		console.log(mv, ms, is_valid)
 		if (is_valid) {
 			var chsum_inp = elm[elm.length - 1];
-			reflchs && (chsum_inp.value = self._cfg._vc[0]);
+			if (self._cfg.populate && reflchs) {
+				chsum_inp.value = self._cfg._vc[0]
+			}
 			updchs && chsum_inp.closest('nav').classList.remove("error"); // 8
 		}
 		cb && cb(self._cfg._vc);
@@ -170,8 +175,14 @@ class MnemonicInterface {
 	 * */
 	reflectFeedback(mv, ms){
 		var self = this;
+		var mvassertions = [];
+		if (mv.assertions.length == 0 ) {
+			mvassertions = ['success_valid_mnemonic']
+		} else {
+			mvassertions = mv.assertions
+		}
 		var mva = [ // 1
-			...(mv.assertions.length == 0 && self._cfg.populate) ? ['success_valid_mnemonic'] : mv.assertions,
+			...mvassertions,
 			...(ms.feedback && ms.feedback.length >= 0 ) ? ms.feedback.map((e)=> `${e.warning}: ${e.match}` ) : [], 
 		];
 		var mva_success = hasSome(mva, 'success');
@@ -195,7 +206,7 @@ class MnemonicInterface {
 			multi_container: self._cfg._ic,
 			pool: wordlist.bip39_eng,
 			onhide: async function() {
-				await self.mnemEvaluate(true, true, function(){ // 4
+				await self.mnemEvaluate(true, true, false, function(chsum_words){ // 4
 					self.reflectChecksumElm();
 				});
 			}
@@ -204,7 +215,7 @@ class MnemonicInterface {
 			pool: [],
 			multi_container: self._cfg._ic,
 			onhide: async function() {
-				await self.mnemEvaluate(false, false);
+				await self.mnemEvaluate(false, false, false);
 			}
 		});
 	}
@@ -249,7 +260,7 @@ class MnemonicInterface {
 					var elSource = self._cfg._ic.querySelectorAll(self._cfg._ns)[self.elDrag.dataset.index - 1]; // 4
 					self.autcom_sc.reattach(elSource); // 5
 					self.setOrderAttr(); // 6
-					await self.mnemEvaluate(true, true, function(){ // 7
+					await self.mnemEvaluate(true, true, true, function(){ // 7
 						self.reflectChecksumElm(); // 8
 					});
 				}
@@ -274,9 +285,10 @@ class MnemonicInterface {
 	setOrderAttr(){ var self = this; for (var i = 0; i < self._cfg._ic.children.length; i++) { self._cfg._ic.children[i].dataset.index = i + 1; } }
 	gatherMnem(elms){ return elms.map((itm)=>itm.value) };
 	focusinhandler = (self) => (e) => { 
-		self.reflectActive( self.getActiveVal() );
+		self.reflectActive( self.getActiveVal(), true );
 	}
 	setChsumState(elm, draggable){
+		var self = this;
 		var clelm = elm.closest(".item");
 		clelm.classList[draggable ? 'remove' : 'add'](this._cfg._ce);
 		clelm.setAttribute('draggable',draggable);
