@@ -156,7 +156,6 @@ class MnemonicInterface {
 			ms = mnemstrong(mnem_str); // 6
 		}
 		var is_valid = self.reflectFeedback(mv, ms); // 7
-		console.log(mv, ms, is_valid)
 		if (is_valid) {
 			var chsum_inp = elm[elm.length - 1];
 			if (self._cfg.populate && reflchs) {
