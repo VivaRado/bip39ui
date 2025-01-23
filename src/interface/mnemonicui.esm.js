@@ -280,10 +280,12 @@ class MnemonicInterface {
 		var clelm = elm.closest(".item");
 		clelm.classList[draggable ? 'remove' : 'add'](this._cfg._ce);
 		clelm.setAttribute('draggable',draggable);
-		if (draggable == false) {
-			elm.addEventListener('focusin', self.focusinhandler(self))
-		} else {
-			elm.removeEventListener('focusin', self.focusinhandler )
+		if (!self._cfg.populate) {
+			if (draggable == false) {
+				elm.addEventListener('focusin', self.focusinhandler(self))
+			} else {
+				elm.removeEventListener('focusin', self.focusinhandler )
+			}
 		}
 	}
 	getActiveVal(){
