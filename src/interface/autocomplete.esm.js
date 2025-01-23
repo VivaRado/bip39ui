@@ -57,10 +57,7 @@ class AutoComplete {
 	selctEvt(self, ac) { ac.addEventListener("click", ac[self.namespace].selct_listener) }
 	inputEvt(self, ac) { 
 		ac.addEventListener("keydown", ac[self.namespace].input_listener) 
-		ac.addEventListener("keyup", function(e){
-			var val = e.target.value.toLowerCase();
-			e.target.value = val;
-		});
+		ac.addEventListener("keyup", ac[self.namespace].keyup_listener)
 	}
 	clickEvt(self, ac) { ac[self.namespace].isShown && ac.nextElementSibling.addEventListener('click', ac[self.namespace].click_listener) }
 	// handlers
@@ -142,6 +139,11 @@ class AutoComplete {
 		self.show(ac);
 		self.search_timeout = setTimeout(function() { self.inputReflection(e, ac); }, ac[self.namespace].stout);
 		var sp_el = Array.from( document.querySelectorAll(".search-results.fade_in") );
+	}
+	keyupEvtHandler = (ac) => (e) => {
+		var self = this;
+		var val = e.target.value.toLowerCase();
+		e.target.value = val;
 	}
 	// actions
 	/**
@@ -297,6 +299,7 @@ class AutoComplete {
 			destroy: 	(remove) => { self.destroy(self, ac, remove) },
 			click_listener: self.clickEvtHandler(ac),
 			input_listener: self.inputEvtHandler(ac),
+			keyup_listener: self.keyupEvtHandler(ac),
 			selct_listener: self.selctEvtHandler(ac),
 			...self._cfg
 		};
@@ -327,6 +330,7 @@ class AutoComplete {
 	 */
 	destroy(self, ac, remove=true) {
 		ac[self.namespace].nav.querySelector('input.inp').removeEventListener('keydown', ac[self.namespace].input_listener);
+		ac[self.namespace].nav.querySelector('input.inp').removeEventListener('keyup', ac[self.namespace].keyup_listener);
 		ac[self.namespace].nav.querySelector('input.inp').removeEventListener('click', ac[self.namespace].selct_listener);
 		remove && ac.remove();
 	}

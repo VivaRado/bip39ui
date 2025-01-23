@@ -273,10 +273,18 @@ class MnemonicInterface {
 	clearClass(c){classOps(this._cfg._ic.querySelectorAll(`.${c}`), c)}
 	setOrderAttr(){ var self = this; for (var i = 0; i < self._cfg._ic.children.length; i++) { self._cfg._ic.children[i].dataset.index = i + 1; } }
 	gatherMnem(elms){ return elms.map((itm)=>itm.value) };
+	focusinhandler = (self) => (e) => { 
+		self.reflectActive( self.getActiveVal() );
+	}
 	setChsumState(elm, draggable){
 		var clelm = elm.closest(".item");
 		clelm.classList[draggable ? 'remove' : 'add'](this._cfg._ce);
 		clelm.setAttribute('draggable',draggable);
+		if (draggable == false) {
+			elm.addEventListener('focusin', self.focusinhandler(self))
+		} else {
+			elm.removeEventListener('focusin', self.focusinhandler )
+		}
 	}
 	getActiveVal(){
 		var si = this._cfg._sa.querySelector('input:checked');
