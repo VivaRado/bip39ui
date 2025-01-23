@@ -1,4 +1,4 @@
-// Interface / AutoComplete ∞ 1.0.7
+// Interface / AutoComplete ∞ 1.0.8
 import { uniqueId, createEl } from "./utils.esm.js";
 class AutoComplete {
 	constructor(ndlst, cfg) {
@@ -211,6 +211,9 @@ class AutoComplete {
 			}
 		}
 	}
+	sortList(items){
+		Array.from(items.querySelectorAll(".itm.show[data-title]")).sort((a, b)=> a.dataset.title.length >= b.dataset.title.length).forEach((item) => item.parentNode.appendChild(item));
+	}
 	// validations
 	/**
 	 * Input of words not currently in the search pool results in error.
@@ -235,6 +238,7 @@ class AutoComplete {
 		var term = e.target.value.toLowerCase();
 		_results.forEach(function(itm) { self.filter_res(ac, itm, term) });
 		var active_results = dest.querySelectorAll('.itm.show');
+		self.sortList(active_results)
 		if (active_results.length == 0) {
 			dest.classList.remove('fade_in');
 			self.clearHiLight();
