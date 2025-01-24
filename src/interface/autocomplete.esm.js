@@ -240,7 +240,10 @@ class AutoComplete {
 		var term = e.target.value.toLowerCase();
 		_results.forEach(function(itm) { self.filter_res(ac, itm, term) });
 		var active_results = dest.querySelectorAll('.itm.show');
-		self.sortList(active_results)
+		if(e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 13 || e.keyCode == 9){
+		} else {
+			self.sortList(self._cfg.multsearch);
+		}
 		if (active_results.length == 0) {
 			dest.classList.remove('fade_in');
 			self.clearHiLight();
